@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "694295336642",
+    "firebase_url": "https://looking2play-b73e6-default-rtdb.firebaseio.com",
+    "project_id": "looking2play-b73e6",
+    "storage_bucket": "looking2play-b73e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694295336642:android:3c2db2cf7a7516f0544d5b",
+        "android_client_info": {
+          "package_name": "com.example.l2p_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694295336642-e5goua5a5kmd5kdfcn7qfp4g7hbqel8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.l2p_app",
+            "certificate_hash": "8532e67884ae693ddf8e6f9b4482ecfd85d415b1"
+          }
+        },
+        {
+          "client_id": "694295336642-ua95okm33s975aitd8l7hu66i6jjd3nh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCiOjYDKqzdEgubEZjVgrUcyUQUpzubIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694295336642-ua95okm33s975aitd8l7hu66i6jjd3nh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
