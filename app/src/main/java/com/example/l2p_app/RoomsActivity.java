@@ -30,7 +30,7 @@ public class RoomsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rooms);
 
         rv = findViewById(R.id.roomsList);
-        db = FirebaseDatabase.getInstance().getReference("Rooms");
+        db = FirebaseDatabase.getInstance().getReference("Rooms/Valorant");
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
 

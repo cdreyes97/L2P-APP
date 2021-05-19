@@ -49,11 +49,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name, description;
+        private TextView name, description;
+        public View view;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            view = itemView;
             name = itemView.findViewById(R.id.roomName);
+            description = itemView.findViewById(R.id.roomDesc);
         }
     }
 
