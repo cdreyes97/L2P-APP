@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 
-public class GroupsActivity extends AppCompatActivity {
+public class RoomsActivity extends AppCompatActivity {
 
     private DatabaseReference db;
 
