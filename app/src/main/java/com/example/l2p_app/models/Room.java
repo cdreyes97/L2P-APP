@@ -4,6 +4,7 @@ public class Room {
 
     private String name;
     private String game;
+    private String description;
     private int roomCapacity;
     private int capacityUsed;
 
@@ -23,6 +24,14 @@ public class Room {
 
     public void setGame(String game) {
         this.game = game;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getRoomCapacity() {
