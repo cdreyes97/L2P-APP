@@ -52,6 +52,8 @@ public class RoomsFragment extends Fragment {
 
         roomsList = inflater.inflate(R.layout.fragment_rooms, container, false);
 
+        rooms = new ArrayList<>();
+
         rv = roomsList.findViewById(R.id.roomsListFragment);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 

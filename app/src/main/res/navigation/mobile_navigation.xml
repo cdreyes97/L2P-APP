@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/nav_rooms"
-        android:name="com.example.l2p_app.SecondFragment"
+        android:name="com.example.l2p_app.RoomsFragment"
         android:label="@string/menu_rooms"
-        tools:layout="@layout/fragment_second" />
+        tools:layout="@layout/fragment_rooms" />
 
 </navigation>
