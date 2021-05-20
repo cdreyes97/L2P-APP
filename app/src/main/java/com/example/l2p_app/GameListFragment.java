@@ -34,7 +34,7 @@ public class GameListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(GameListFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                        .navigate(R.id.SecondFragment);
             }
         });
     }

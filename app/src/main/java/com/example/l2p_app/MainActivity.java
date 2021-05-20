@@ -2,6 +2,7 @@ package com.example.l2p_app;
 
 import android.os.Bundle;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -33,13 +35,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        setSupportActionBar(binding.appBarMain.toolbar);
+
+        NavigationView navigationView = binding.navView;
+        DrawerLayout drawer = binding.drawerLayout;
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_rooms).setOpenableLayout(drawer).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -48,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }*/
-
+        Log.d("a", Integer.toString(id));
         return super.onOptionsItemSelected(item);
     }
 
@@ -78,15 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void displayToast(String message) {
-        Toast.makeText(getApplicationContext(), message,
-                Toast.LENGTH_SHORT).show();
-    }
-
 
     public void redirectToRoom(View view) {
         Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main)
-                .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                .navigate(R.id.SecondFragment);
     }
 
 
