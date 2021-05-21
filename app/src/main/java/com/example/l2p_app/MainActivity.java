@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }*/
-        Log.d("a", Integer.toString(id));
         return super.onOptionsItemSelected(item);
     }
 
@@ -85,10 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void redirectToRoom(View view) {
-        Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main)
-                .navigate(R.id.SecondFragment);
-    }
+
 
 
 }
