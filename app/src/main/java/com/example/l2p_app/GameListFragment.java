@@ -65,13 +65,13 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
         String game;
         GameListFragmentDirections.ActionNavHomeToNavRooms action;
         switch (view.getId()){
-            case R.id.imageView2:
+            case R.id.imageView:
                 game = "Valorant";
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
                 NavHostFragment.findNavController(GameListFragment.this)
                         .navigate((NavDirections) action);
                 break;
-            case R.id.imageView:
+            case R.id.imageView2:
                 game = "Overwatch";
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
                 NavHostFragment.findNavController(GameListFragment.this)
