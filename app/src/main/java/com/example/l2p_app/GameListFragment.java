@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -61,14 +62,20 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        String game;
+        GameListFragmentDirections.ActionNavHomeToNavRooms action;
         switch (view.getId()){
             case R.id.imageView2:
-                Navigation.findNavController(view)
-                        .navigate(R.id.nav_rooms);
+                game = "Valorant";
+                action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
+                NavHostFragment.findNavController(GameListFragment.this)
+                        .navigate((NavDirections) action);
                 break;
             case R.id.imageView:
-                Navigation.findNavController(view)
-                        .navigate(R.id.nav_home);
+                game = "Overwatch";
+                action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
+                NavHostFragment.findNavController(GameListFragment.this)
+                        .navigate((NavDirections) action);
                     break;
         }
     }
