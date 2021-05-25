@@ -37,6 +37,7 @@ public class RoomCreation extends Fragment {
         gameInput =  roomCreationView.findViewById(R.id.form_games);
         playersInput = roomCreationView.findViewById(R.id.form_players);
 
+
         return  roomCreationView;
     }
 
@@ -46,7 +47,9 @@ public class RoomCreation extends Fragment {
          roomCreationView.findViewById(R.id.form_button).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Log.d("a","AAAAAAAAAAAAAAAA");
+
+                Log.d("a",nameInput.getText().toString());
+                Log.d("a",gameInput.getSelectedItem().toString());
             }
         });
 

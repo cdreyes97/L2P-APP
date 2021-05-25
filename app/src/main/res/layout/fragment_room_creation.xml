@@ -1,64 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/form_ScrollView"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:scrollbars="vertical"
-tools:context=".RoomCreation">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RoomCreation">
 
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:orientation="vertical"
-    android:layout_height="fill_parent">
 
     <TextView
         android:id="@+id/TextViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/form_title"
-        android:textSize="10pt">
-    </TextView>
+        android:textSize="10pt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></TextView>
 
     <EditText
         android:id="@+id/form_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/form_name"
+        android:layout_marginTop="28dp"
+        android:ems="10"
         android:inputType="textPersonName"
-        android:layout_width="fill_parent">
-    </EditText>
-
+        android:hint="@string/form_name"
+        app:layout_constraintEnd_toEndOf="@+id/TextViewTitle"
+        app:layout_constraintStart_toStartOf="@+id/TextViewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewTitle"
+        android:autofillHints="" />
 
     <Spinner
         android:id="@+id/form_games"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:prompt="@string/game1"
-        android:entries="@array/gameList"/>
+        android:entries="@array/gameList"
+        app:layout_constraintEnd_toEndOf="@+id/form_name"
+        app:layout_constraintStart_toStartOf="@+id/form_name"
+        app:layout_constraintTop_toBottomOf="@+id/form_name" />
 
     <Spinner
         android:id="@+id/form_players"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:prompt="@string/game1"
-        android:entries="@array/gameList"/>
+        android:entries="@array/gameList"
+        app:layout_constraintEnd_toEndOf="@+id/form_games"
+        app:layout_constraintStart_toStartOf="@+id/form_games"
+        app:layout_constraintTop_toBottomOf="@+id/form_games" />
 
     <EditText
         android:id="@+id/form_description"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/form_description"
+        android:layout_marginTop="28dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:lines="5"></EditText>
+        android:lines="5"
+        android:hint="@string/form_description"
+        app:layout_constraintEnd_toEndOf="@+id/form_players"
+        app:layout_constraintStart_toStartOf="@+id/form_players"
+        app:layout_constraintTop_toBottomOf="@+id/form_players" />
 
     <Button
         android:id="@+id/form_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
         android:text="@string/form_button"
-        android:layout_width="fill_parent">
-    </Button>
+        app:layout_constraintEnd_toEndOf="@+id/form_description"
+        app:layout_constraintStart_toStartOf="@+id/form_description"
+        app:layout_constraintTop_toBottomOf="@+id/form_description" />
 
-</LinearLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
