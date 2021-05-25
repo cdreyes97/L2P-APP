@@ -47,7 +47,7 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(GameListFragment.this)
-                        .navigate(R.id.SecondFragment);
+                        .navigate(R.id.action_nav_home_to_nav_rooms);
             }
         });
 
@@ -78,6 +78,7 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
                         .navigate((NavDirections) action);
                     break;
         }
+
     }
 
 }

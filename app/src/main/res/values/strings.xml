@@ -21,5 +21,22 @@
 
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <!--Form strings-->
+    <string name="creation_form_label">Crear una sala</string>
+    <string name="form_title">Seleccione un juego para crear la sala</string>
+    <string name="form_description">Descripcion de la sala</string>
+    <string name="form_name">Nombre de la sala</string>
+    <string name="game1">Valorant</string>
+    <string name="game2">Overwatch</string>
+    <string name="game3">League of Legends</string>
+    <string name="game4">Rocket League</string>
+    <string-array name="gameList">
+        <item>@string/game1</item>
+        <item>@string/game2</item>
+        <item>@string/game3</item>
+        <item>@string/game4</item>
+    </string-array>
+    <string name="form_button">Crear Sala</string>
+    <string name="title_activity_room_creation">RoomCreation</string>
 
 </resources>

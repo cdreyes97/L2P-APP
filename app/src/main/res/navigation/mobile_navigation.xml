@@ -24,8 +24,14 @@
             android:name="game"
             app:argType="string" />
     </fragment>
-
-
+    <fragment
+        android:id="@+id/roomCreation"
+        android:name="com.example.l2p_app.RoomCreation"
+        android:label="@string/creation_form_label"
+        tools:layout="@layout/fragment_room_creation" />
+    <action
+        android:id="@+id/action_global_roomCreation"
+        app:destination="@id/roomCreation" />
 
 
 </navigation>
