@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:isScrollContainer="true"
     tools:context=".GameListFragment">
 
 
@@ -22,7 +23,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="280dp"
-        android:layout_height="100dp"
+        android:layout_height="86dp"
         android:layout_marginTop="24dp"
         android:contentDescription="TODO"
         android:onClick="onClick"
@@ -35,11 +36,12 @@
         tools:src="@drawable/valorant_logo"
         tools:srcCompat="@drawable/valorant_logo" />
 
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="280dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="24dp"
         android:contentDescription="valorant_game"
         android:onClick="onClick"
         android:scaleType="centerCrop"
@@ -51,11 +53,10 @@
         tools:src="@drawable/overwatch_logo"
         tools:srcCompat="@drawable/overwatch_logo" />
 
-
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="280dp"
-        android:layout_height="100dp"
+        android:layout_height="86dp"
         android:layout_marginTop="24dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +70,7 @@
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="280dp"
-        android:layout_height="100dp"
+        android:layout_height="86dp"
         android:layout_marginTop="24dp"
         android:contentDescription="TODO"
         android:scaleType="centerCrop"
@@ -81,17 +82,18 @@
         tools:src="@drawable/rocket_logo"
         tools:srcCompat="@drawable/rocket_logo" />
 
-
-    <Button
-        android:id="@+id/button_first"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first"
-        app:layout_constraintVertical_bias="0.861" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.102"
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

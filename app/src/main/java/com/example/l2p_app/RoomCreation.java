@@ -31,12 +31,12 @@ public class RoomCreation extends Fragment {
         // Inflate the layout for this fragment
 
         roomCreationView = inflater.inflate(R.layout.fragment_room_creation, container, false);
+        
 
         nameInput =  roomCreationView.findViewById(R.id.form_name);
         descriptionInput = roomCreationView.findViewById(R.id.form_description);
         gameInput =  roomCreationView.findViewById(R.id.form_games);
         playersInput = roomCreationView.findViewById(R.id.form_players);
-
 
         return  roomCreationView;
     }
@@ -56,10 +56,4 @@ public class RoomCreation extends Fragment {
     }
 
 
-
-
-   public void createRoom(View button){
-
-        Log.d("a","AAAAAAAAAAAAAAAA");
-   }
 }

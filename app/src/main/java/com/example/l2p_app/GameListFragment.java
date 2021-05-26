@@ -43,14 +43,12 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(GameListFragment.this)
-                        .navigate(R.id.action_nav_home_to_nav_rooms);
+                Navigation.findNavController(view).navigate(R.id.action_global_roomCreation);
             }
         });
-
     }
 
 
