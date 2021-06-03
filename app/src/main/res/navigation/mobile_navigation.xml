@@ -23,6 +23,9 @@
         <argument
             android:name="game"
             app:argType="string" />
+        <action
+            android:id="@+id/action_nav_rooms_to_roomContent"
+            app:destination="@id/roomContent" />
     </fragment>
     <fragment
         android:id="@+id/roomCreation"
@@ -32,7 +35,28 @@
     <action
         android:id="@+id/action_global_roomCreation"
         app:destination="@id/roomCreation" />
-
+    <fragment
+        android:id="@+id/roomContent"
+        android:name="com.example.l2p_app.RoomContent"
+        android:label="fragment_room_content"
+        tools:layout="@layout/fragment_room_content" >
+        <action
+            android:id="@+id/action_roomContent_to_sendRequest"
+            app:destination="@id/sendRequest" />
+        <action
+            android:id="@+id/action_roomContent_to_editRoom"
+            app:destination="@id/editRoom" />
+    </fragment>
+    <fragment
+        android:id="@+id/sendRequest"
+        android:name="com.example.l2p_app.SendRequest"
+        android:label="fragment_send_request"
+        tools:layout="@layout/fragment_send_request" />
+    <fragment
+        android:id="@+id/editRoom"
+        android:name="com.example.l2p_app.EditRoom"
+        android:label="fragment_edit_room"
+        tools:layout="@layout/fragment_edit_room" />
 
 
 </navigation>
