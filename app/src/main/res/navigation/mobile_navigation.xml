@@ -57,6 +57,11 @@
         android:name="com.example.l2p_app.EditRoom"
         android:label="fragment_edit_room"
         tools:layout="@layout/fragment_edit_room" />
+    <activity
+        android:id="@+id/roomsActivity"
+        android:name="com.example.l2p_app.RoomsActivity"
+        android:label="activity_rooms"
+        tools:layout="@layout/activity_rooms" />
 
 
 </navigation>

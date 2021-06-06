@@ -20,6 +20,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.l2p_app.databinding.ActivityMainBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences sp;
+    private FirebaseAuth firebaseAuth;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -35,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sp = getSharedPreferences("login",MODE_PRIVATE);
+        firebaseAuth = FirebaseAuth.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //Log.d("USER ID", firebaseAuth.getCurrentUser().getUid());
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
-            sp.edit().putBoolean("logged",false).apply();
+            firebaseAuth.signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
             return true;
@@ -73,10 +75,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("a","no funciona");
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        switch (id){
+            case R.id.logout: {
+                Log.d("a","no funciona");
+                Logout();
+            }
+            default:
+                Log.d("id", Integer.toString(id));
+        }
 
         /*//noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -92,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+
+    private void Logout(){
+        firebaseAuth.signOut();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
+    }
 
 
 

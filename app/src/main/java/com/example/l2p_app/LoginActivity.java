@@ -1,33 +1,36 @@
 package com.example.l2p_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-    SharedPreferences sp;
+public class LoginActivity extends AppCompatActivity {
 
     private EditText name;
     private EditText password;
     private Button loginButton;
+    private TextView userRegistration;
+    private ProgressBar pgsBar;
+
+    private FirebaseAuth firebaseAuth;
 
     String userName = "";
     String userPassword = "";
-
-    /* Class to hold credentials */
-    class Credentials
-    {
-        String name = "Admin";
-        String password = "123456";
-    }
 
     boolean isValid = false;
 
@@ -41,69 +44,82 @@ public class LoginActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         password = findViewById(R.id.password);
         loginButton = findViewById(R.id.btnLogin);
+        userRegistration = findViewById(R.id.register);
+        pgsBar = findViewById(R.id.pBar);
 
 
-        sp = getSharedPreferences("login",MODE_PRIVATE);
+        firebaseAuth = FirebaseAuth.getInstance();
 
-        if(sp.getBoolean("logged",false)){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+
+        /*if(sp.getBoolean("logged",false)){
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }*/
+
+        if(user != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
 
         /* Describe the logic when the login button is clicked */
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pgsBar.setVisibility(View.VISIBLE);
+                validate(name.getText().toString(), password.getText().toString());
+            }
+        });
 
-                /* Obtain user inputs */
-                userName = name.getText().toString();
-                userPassword = password.getText().toString();
-
-                /* Check if the user inputs are empty */
-                if(userName.isEmpty() || userPassword.isEmpty())
-                {
-                    /* Display a message toast to user to enter the details */
-                    Toast.makeText(LoginActivity.this, "Porfavor ingrese nombre y contraseña!", Toast.LENGTH_LONG).show();
-
-                }else {
-
-                    /* Validate the user inputs */
-                    isValid = validate(userName, userPassword);
-
-                    /* Validate the user inputs */
-
-                    /* If not valid */
-                    if (!isValid) {
-
-                        /* Display error message */
-                        Toast.makeText(LoginActivity.this, "Credenciales incorrectas, porfavor intente nuevamente!", Toast.LENGTH_LONG).show();
-                    }
-                    /* If valid */
-                    else {
-
-                        /* Allow the user in to your app by going into the next activity */
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                        sp.edit().putBoolean("logged",true).apply();
-                    }
-
-                }
+        userRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
+                finish();
             }
         });
     }
 
 
     /* Validate the credentials */
-    private boolean validate(String userName, String userPassword)
-    {
-        /* Get the object of Credentials class */
-        Credentials credentials = new Credentials();
+    private void validate(String userName, String userPassword) {
 
-        /* Check the credentials */
-        if(userName.equals(credentials.name) && userPassword.equals(credentials.password))
-        {
-            return true;
+        if(userName.isEmpty() || userPassword.isEmpty()){
+            Toast.makeText(LoginActivity.this, "Porfavor ingrese todas las credenciales", Toast.LENGTH_SHORT).show();
+            pgsBar.setVisibility(View.GONE);
+            return;
         }
+        firebaseAuth.signInWithEmailAndPassword(userName, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "Ingreso correcto", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                    //checkEmailVerification();
+                }else{
+                    Toast.makeText(LoginActivity.this, "Ingreso Fallido", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        return false;
     }
+
+
+    /*private void checkEmailVerification(){
+        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
+        Boolean emailflag = firebaseUser.isEmailVerified();
+
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
+
+//        if(emailflag){
+//            finish();
+//            startActivity(new Intent(MainActivity.this, SecondActivity.class));
+//        }else{
+//            Toast.makeText(this, "Verify your email", Toast.LENGTH_SHORT).show();
+//            firebaseAuth.signOut();
+//        }
+    }*/
 }

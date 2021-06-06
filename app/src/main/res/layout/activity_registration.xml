@@ -7,4 +7,91 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
+  <EditText
+      android:id="@+id/userName"
+      android:layout_width="268dp"
+      android:layout_height="51dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="8dp"
+      android:ems="10"
+      android:hint="@string/enter_name"
+      android:inputType="textPersonName"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHorizontal_bias="0.496"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.271" />
+
+  <EditText
+      android:id="@+id/userEmail"
+      android:layout_width="266dp"
+      android:layout_height="53dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="8dp"
+      android:ems="10"
+      android:hint="@string/register_email"
+      android:inputType="textEmailAddress"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHorizontal_bias="0.503"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/userName"
+      app:layout_constraintVertical_bias="0.013" />
+
+  <EditText
+      android:id="@+id/userPassword"
+      android:layout_width="264dp"
+      android:layout_height="57dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="7dp"
+      android:ems="10"
+      android:hint="@string/login_password"
+      android:inputType="textPassword"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHorizontal_bias="0.503"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/userEmail"
+      app:layout_constraintVertical_bias="0.029" />
+
+  <Button
+      android:id="@+id/btnRegister"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="8dp"
+      android:text="@string/register_button"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/userPassword"
+      app:layout_constraintVertical_bias="0.269" />
+
+  <TextView
+      android:id="@+id/userLogin"
+      android:layout_width="wrap_content"
+      android:layout_height="26dp"
+      android:layout_marginBottom="8dp"
+      android:layout_marginLeft="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginTop="8dp"
+      android:text="Ya registrado? Inicia Sesión!"
+      android:textSize="18dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHorizontal_bias="0.503"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/btnRegister"
+      app:layout_constraintVertical_bias="0.0" />
+
   </androidx.constraintlayout.widget.ConstraintLayout>
