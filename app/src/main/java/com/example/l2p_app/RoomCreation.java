@@ -14,6 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.l2p_app.models.Room;
+import com.example.l2p_app.models.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class RoomCreation extends Fragment {
@@ -23,6 +27,7 @@ public class RoomCreation extends Fragment {
     private EditText descriptionInput = null;
     private Spinner  gameInput = null;
     private Spinner playersInput = null;
+    private DatabaseReference db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,7 +36,7 @@ public class RoomCreation extends Fragment {
         // Inflate the layout for this fragment
 
         roomCreationView = inflater.inflate(R.layout.fragment_room_creation, container, false);
-        
+
 
         nameInput =  roomCreationView.findViewById(R.id.form_name);
         descriptionInput = roomCreationView.findViewById(R.id.form_description);
@@ -48,8 +53,30 @@ public class RoomCreation extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Log.d("a",nameInput.getText().toString());
-                Log.d("a",gameInput.getSelectedItem().toString());
+                String name = nameInput.getText().toString();
+                String game = gameInput.getSelectedItem().toString();
+                String description = descriptionInput.getText().toString();
+
+                db = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
+
+                DatabaseReference newRoom = db.push();
+                newRoom.setValue(new Room(name, game, description, 5,1));
+                String roomKey = newRoom.getKey();
+
+                User user = new User("Admin");
+
+                db = FirebaseDatabase.getInstance().getReference("room_participants");
+                DatabaseReference newRoomParticipants = db.child(roomKey).child("Admin");
+                newRoomParticipants.setValue("Admin");
+
+
+                db = FirebaseDatabase.getInstance().getReference("room_owner");
+                DatabaseReference newRoomOwner = db.child("Admin").child(roomKey);
+                newRoomOwner.setValue(name);
+
+                //Log.d("a",nameInput.getText().toString());
+                //Log.d("a",gameInput.getSelectedItem().toString());
+                Log.d("Creating Room",roomKey);
             }
         });
 
