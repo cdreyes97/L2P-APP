@@ -63,7 +63,7 @@ public class RoomCreation extends Fragment {
                 newRoom.setValue(new Room(name, game, description, 5,1));
                 String roomKey = newRoom.getKey();
 
-                User user = new User("Admin");
+                User user = new User("a@a.com","Admin");
 
                 db = FirebaseDatabase.getInstance().getReference("room_participants");
                 DatabaseReference newRoomParticipants = db.child(roomKey).child("Admin");

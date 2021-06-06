@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.example.l2p_app.databinding.NavHeaderMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -21,35 +22,55 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.l2p_app.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private NavHeaderMainBinding navHeaderMainBinding;
+
+
+    TextView navUsername;
+    ImageView navProfilePic;
+    TextView navEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        navHeaderMainBinding = NavHeaderMainBinding.inflate(getLayoutInflater());
+        binding.navView.addHeaderView(navHeaderMainBinding.getRoot());
         setContentView(binding.getRoot());
-        //Log.d("USER ID", firebaseAuth.getCurrentUser().getUid());
+
+
+        navHeaderMainBinding.headerUsername.setText(user.getDisplayName());
+        navHeaderMainBinding.headerEmail.setText(user.getEmail());
+
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
         NavigationView navigationView = binding.navView;
         DrawerLayout drawer = binding.drawerLayout;
 
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home).setOpenableLayout(drawer).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
 
 
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
@@ -64,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.action_global_roomCreation);
             }
         });*/
+
     }
 
     @Override

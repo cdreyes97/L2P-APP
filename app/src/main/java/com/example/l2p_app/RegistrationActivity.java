@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,21 +14,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.l2p_app.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText userName, userPassword, userEmail;
     private Button regButton;
     private TextView userLogin;
-    private FirebaseAuth firebaseAuth;
+    private ImageView userProfilePic;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+
+    private static int PICK_IMAGE = 123;
+    Uri imagePath;
     String email, name, password;
 
     @Override
@@ -44,19 +56,25 @@ public class RegistrationActivity extends AppCompatActivity {
                     //Upload data to the database
                     String user_email = userEmail.getText().toString().trim();
                     String user_password = userPassword.getText().toString().trim();
+                    String user_name = userName.getText().toString();
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(user_name).build();
+
 
                     firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if(task.isSuccessful()){
-                                //sendEmailVerification();
+                                //sendEmailVerification()
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                user.updateProfile(profileUpdates);
                                 sendUserData();
                                 firebaseAuth.signOut();
                                 Toast.makeText(RegistrationActivity.this, "Registrado exitosamente!", Toast.LENGTH_SHORT).show();
                                 finish();
                                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
-                                finish();
                             }else{
                                 Toast.makeText(RegistrationActivity.this, "Registro fallido", Toast.LENGTH_SHORT).show();
                             }
@@ -83,6 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
         userEmail = (EditText)findViewById(R.id.userEmail);
         regButton = (Button)findViewById(R.id.btnRegister);
         userLogin = (TextView)findViewById(R.id.userLogin);
+        userProfilePic = findViewById(R.id.profiePicture);
     }
 
     private Boolean validate(){
@@ -103,10 +122,11 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-    private void sendUserData(){/*
+    private void sendUserData(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = firebaseDatabase.getReference(firebaseAuth.getUid());
-        StorageReference imageReference = storageReference.child(firebaseAuth.getUid()).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
+        DatabaseReference db = firebaseDatabase.getReference("Users");
+        DatabaseReference newUser = db.child(firebaseAuth.getUid());
+        /*StorageReference imageReference = storageReference.child(firebaseAuth.getUid()).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
         UploadTask uploadTask = imageReference.putFile(imagePath);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -118,10 +138,8 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 Toast.makeText(RegistrationActivity.this, "Upload successful!", Toast.LENGTH_SHORT).show();
             }
-        });
-        UserProfile userProfile = new UserProfile(age, email, name);
-        myRef.setValue(userProfile);
-    }*/
-}
+        });*/
+        newUser.setValue(new User(email,name));
+    }
 
 }

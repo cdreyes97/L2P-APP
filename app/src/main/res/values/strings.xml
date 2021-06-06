@@ -4,7 +4,7 @@
     <!-- Strings used for login activity -->
     <string name="login_password">Contraseña </string>
     <string name="login">Ingresar</string>
-    <string name="enter_name">Nombre</string>
+    <string name="enter_name">Nombre de usuario</string>
     <!-- Strings used for login activity -->
     <string name="register_login">Nuevo usuario? Registrate!</string>
     <string name="register_email">Correo</string>
