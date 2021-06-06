@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="action_settings">Settings</string>
+    <!-- Strings used for login activity -->
+    <string name="input_text_hint">Contraseña: </string>
+    <string name="login">Ingresar</string>
+    <string name="enter_name">Nombre:</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Look to Play</string>
     <string name="select_view_title">Juegos Disponibles</string>
@@ -18,6 +22,7 @@
     <string name="menu_home">Inicio</string>
     <string name="menu_rooms">Mis Salas</string>
     <string name="menu_requests">Solicitudes</string>
+    <string name="menu_logout">Logout</string>
 
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
