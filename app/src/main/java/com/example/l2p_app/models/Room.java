@@ -8,7 +8,13 @@ public class Room {
     private int roomCapacity;
     private int capacityUsed;
 
-    public Room() {}
+    public Room(String name, String game, String description, int roomCapacity, int capacityUsed) {
+        this.name = name;
+        this.game = game;
+        this.description = description;
+        this.roomCapacity = roomCapacity;
+        this.capacityUsed = capacityUsed;
+    }
 
     public String getName() {
         return name;
