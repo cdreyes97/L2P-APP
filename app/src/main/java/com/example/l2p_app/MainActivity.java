@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
 
 
+
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home).setOpenableLayout(drawer).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -78,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
             return true;
+        });
+
+        navHeaderMainBinding.headerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                navController.navigate(R.id.action_global_profileFragment);
+            }
         });
         /*binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override

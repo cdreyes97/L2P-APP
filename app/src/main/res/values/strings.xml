@@ -9,6 +9,8 @@
     <string name="register_login">Nuevo usuario? Registrate!</string>
     <string name="register_email">Correo</string>
     <string name="register_button">Registrarse</string>
+    <!-- Strings used for profile fragment -->
+    <string name="edit_btn">Editar información</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Look to Play</string>
     <string name="select_view_title">Juegos Disponibles</string>
