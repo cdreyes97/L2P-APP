@@ -2,6 +2,7 @@ package com.example.l2p_app.models;
 
 public class Room {
 
+    private String UID;
     private String name;
     private String game;
     private String description;
@@ -17,6 +18,14 @@ public class Room {
     }
 
     public Room(){}
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
 
     public String getName() {
         return name;

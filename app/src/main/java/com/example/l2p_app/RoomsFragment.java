@@ -4,7 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +37,8 @@ public class RoomsFragment extends Fragment {
     private RecyclerView rv;
     private DatabaseReference db;
     private ArrayList<Room> rooms;
+    private CardView card;
+    private FragmentRoomsBinding binding;
 
     public RoomsFragment() {
         // Required empty public constructor
@@ -54,11 +59,14 @@ public class RoomsFragment extends Fragment {
         String game_name = RoomsFragmentArgs.fromBundle(getArguments()).getGame();
         Log.d("game", game_name);
 
-        roomsList = inflater.inflate(R.layout.fragment_rooms, container, false);
+
+        binding = FragmentRoomsBinding.inflate(inflater, container, false);
+
+        //roomsList = inflater.inflate(R.layout.fragment_rooms, container, false);
 
         rooms = new ArrayList<>();
 
-        rv = roomsList.findViewById(R.id.roomsListFragment);
+        rv = binding.roomsListFragment;
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
         db = FirebaseDatabase.getInstance().getReference("Rooms/Valorant");
@@ -68,9 +76,11 @@ public class RoomsFragment extends Fragment {
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Room room = ds.getValue(Room.class);
+                    room.setUID(ds.getKey());
                     rooms.add(room);
+                    //Log.d("UID", room.getUID());
                 }
-                //adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -80,13 +90,16 @@ public class RoomsFragment extends Fragment {
         });
 
 
-        return roomsList;
+        return binding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+
 
     @Override
     public void onStart() {
@@ -116,9 +129,9 @@ public class RoomsFragment extends Fragment {
         adapter.startListening();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name, description;
+        private TextView name, description, roomUID;
         public View view;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -126,7 +139,24 @@ public class RoomsFragment extends Fragment {
             view = itemView;
             name = itemView.findViewById(R.id.roomName);
             description = itemView.findViewById(R.id.roomDesc);
+            roomUID = itemView.findViewById(R.id.roomUID);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Log.d("Card clicked", "yes");
+                    RoomsFragmentDirections.ActionNavRoomsToRoomContent action;
+                    String stringRoomUID = roomUID.getText().toString();
+                    action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID);
+                    NavHostFragment.findNavController(RoomsFragment.this)
+                            .navigate((NavDirections) action);
+
+
+                }
+            });
         }
     }
+
+
 
 }
