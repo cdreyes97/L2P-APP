@@ -16,6 +16,8 @@ public class Room {
         this.capacityUsed = capacityUsed;
     }
 
+    public Room(){}
+
     public String getName() {
         return name;
     }

@@ -1,5 +1,6 @@
 package com.example.l2p_app;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,20 +62,23 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         String game;
-        GameListFragmentDirections.ActionNavHomeToNavRooms action;
+        //GameListFragmentDirections.ActionNavHomeToNavRooms action;
         switch (view.getId()){
             case R.id.imageView:
                 game = "Valorant";
-                action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
-                NavHostFragment.findNavController(GameListFragment.this)
-                        .navigate((NavDirections) action);
+                //action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
+                //NavHostFragment.findNavController(GameListFragment.this)
+                        //.navigate((NavDirections) action);
+                Intent intent = new Intent(getActivity(), RoomsActivity.class);
+                intent.putExtra("game", game);
+                startActivity(intent);
                 break;
             case R.id.imageView2:
                 game = "Overwatch";
-                action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
-                NavHostFragment.findNavController(GameListFragment.this)
-                        .navigate((NavDirections) action);
-                    break;
+                //action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
+                //NavHostFragment.findNavController(GameListFragment.this)
+                        //.navigate((NavDirections) action);
+                    //break;
         }
 
     }
