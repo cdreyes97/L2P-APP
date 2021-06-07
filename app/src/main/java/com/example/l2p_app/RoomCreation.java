@@ -29,6 +29,13 @@ public class RoomCreation extends Fragment {
     private Spinner playersInput = null;
     private DatabaseReference db;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

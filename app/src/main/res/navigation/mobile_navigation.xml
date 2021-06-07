@@ -62,6 +62,22 @@
         android:name="com.example.l2p_app.RoomsActivity"
         android:label="activity_rooms"
         tools:layout="@layout/activity_rooms" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.l2p_app.ProfileFragment"
+        android:label="Perfil de usuario"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfile"
+            app:destination="@id/editProfile" />
+    </fragment>
+    <action android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment" />
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.example.l2p_app.EditProfile"
+        android:label="Editar Información"
+        tools:layout="@layout/fragment_edit_profile" />
 
 
 </navigation>

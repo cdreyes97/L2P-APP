@@ -101,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
         userEmail = (EditText)findViewById(R.id.userEmail);
         regButton = (Button)findViewById(R.id.btnRegister);
         userLogin = (TextView)findViewById(R.id.userLogin);
-        userProfilePic = findViewById(R.id.profiePicture);
+        userProfilePic = findViewById(R.id.regProfilePicture);
     }
 
     private Boolean validate(){
