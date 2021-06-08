@@ -117,6 +117,8 @@ public class RoomsFragment extends Fragment {
                 holder.name.setText(room.getName());
                 holder.description.setText(room.getDescription());
                 holder.roomUID.setText(room.getUID());
+
+
             }
 
             @NonNull
@@ -143,6 +145,7 @@ public class RoomsFragment extends Fragment {
             description = itemView.findViewById(R.id.roomDesc);
             roomUID = itemView.findViewById(R.id.roomUID);
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -157,6 +160,7 @@ public class RoomsFragment extends Fragment {
                 }
             });
         }
+
     }
 
 

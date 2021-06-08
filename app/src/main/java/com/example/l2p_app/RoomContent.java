@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.l2p_app.databinding.FragmentRoomContentBinding;
@@ -29,6 +30,7 @@ public class RoomContent extends Fragment {
     private TextView roomName, roomOwner, roomDescription;
     private String gameName;
     private String roomUID;
+    private ArrayAdapter<Room> adapter;
 
     public RoomContent() {
         // Required empty public constructor
@@ -50,7 +52,8 @@ public class RoomContent extends Fragment {
         roomDescription = binding.roomDescription;
         roomOwner = binding.roomOwner;
 
-        //room = new Room();
+
+
 
         gameName = RoomContentArgs.fromBundle(getArguments()).getGame();
         roomUID = RoomContentArgs.fromBundle(getArguments()).getUID();
@@ -61,11 +64,15 @@ public class RoomContent extends Fragment {
         db = FirebaseDatabase.getInstance().getReference("Rooms/" + gameName + "/" + roomUID);
 
         db.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                room = new Room();
                 room = snapshot.getValue(Room.class);
                 room.setUID(snapshot.getKey());
-                //Log.d("snapshot", room.getName());
+                roomName.setText(room.getName());
+                roomDescription.setText(room.getDescription());
+                Log.d("snapshot", room.getUID());
 
             }
 
@@ -75,7 +82,7 @@ public class RoomContent extends Fragment {
             }
         });
 
-        Log.d("snapshot", room.getName());
+        //Log.d("snapshot", room.getUID());
 
         //roomName.setText(room.getName());
         //roomDescription.setText(room.getDescription());
