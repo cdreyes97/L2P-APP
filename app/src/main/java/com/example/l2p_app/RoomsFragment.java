@@ -39,6 +39,7 @@ public class RoomsFragment extends Fragment {
     private ArrayList<Room> rooms;
     private CardView card;
     private FragmentRoomsBinding binding;
+    private String gameName;
 
     public RoomsFragment() {
         // Required empty public constructor
@@ -56,8 +57,8 @@ public class RoomsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String game_name = RoomsFragmentArgs.fromBundle(getArguments()).getGame();
-        Log.d("game", game_name);
+        gameName = RoomsFragmentArgs.fromBundle(getArguments()).getGame();
+        Log.d("game", gameName);
 
 
         binding = FragmentRoomsBinding.inflate(inflater, container, false);
@@ -69,7 +70,7 @@ public class RoomsFragment extends Fragment {
         rv = binding.roomsListFragment;
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        db = FirebaseDatabase.getInstance().getReference("Rooms/Valorant");
+        db = FirebaseDatabase.getInstance().getReference("Rooms/" + gameName);
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,6 +116,7 @@ public class RoomsFragment extends Fragment {
                 Room room = rooms.get(position);
                 holder.name.setText(room.getName());
                 holder.description.setText(room.getDescription());
+                holder.roomUID.setText(room.getUID());
             }
 
             @NonNull
@@ -147,7 +149,7 @@ public class RoomsFragment extends Fragment {
                     //Log.d("Card clicked", "yes");
                     RoomsFragmentDirections.ActionNavRoomsToRoomContent action;
                     String stringRoomUID = roomUID.getText().toString();
-                    action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID);
+                    action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID, gameName);
                     NavHostFragment.findNavController(RoomsFragment.this)
                             .navigate((NavDirections) action);
 

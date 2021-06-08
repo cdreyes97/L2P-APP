@@ -44,6 +44,9 @@
         <argument
             android:name="UID"
             app:argType="string" />
+        <argument
+            android:name="game"
+            app:argType="string" />
         <action
             android:id="@+id/action_roomContent_to_sendRequest"
             app:destination="@id/sendRequest" />
