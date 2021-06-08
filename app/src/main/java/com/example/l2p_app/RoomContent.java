@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.l2p_app.databinding.FragmentRoomContentBinding;
@@ -28,6 +29,7 @@ public class RoomContent extends Fragment {
     private View roomView;
     private DatabaseReference db;
     private TextView roomName, roomOwner, roomDescription;
+    private Button joinRoomBtn;
     private String gameName;
     private String roomUID;
     private ArrayAdapter<Room> adapter;
@@ -51,6 +53,7 @@ public class RoomContent extends Fragment {
         roomName = binding.roomName;
         roomDescription = binding.roomDescription;
         roomOwner = binding.roomOwner;
+        joinRoomBtn = binding.joinRoomBtn;
 
 
 
@@ -82,10 +85,12 @@ public class RoomContent extends Fragment {
             }
         });
 
-        //Log.d("snapshot", room.getUID());
-
-        //roomName.setText(room.getName());
-        //roomDescription.setText(room.getDescription());
+        joinRoomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("join", "yes");
+            }
+        });
 
         return binding.getRoot();
     }
