@@ -1,6 +1,7 @@
 package com.example.l2p_app;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.l2p_app.models.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 
 public class ProfileFragment extends Fragment {
@@ -40,6 +45,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar pgsBar;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
+    private FirebaseStorage firebaseStorage;
 
 
     @Override
@@ -64,12 +70,21 @@ public class ProfileFragment extends Fragment {
         pgsBar = profileView.findViewById(R.id.profileProgressBar);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
 
         pgsBar.setVisibility(View.VISIBLE);
 
 
         DatabaseReference db = firebaseDatabase.getReference("Users");
         DatabaseReference userReference = db.child(firebaseAuth.getUid());
+
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child(firebaseAuth.getUid()).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(ProfileFragment.this).load(uri).centerCrop().into(profilePic);
+            }
+        });
 
         userReference.addValueEventListener(new ValueEventListener() {
             @Override

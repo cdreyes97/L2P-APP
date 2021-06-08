@@ -1,15 +1,23 @@
 package com.example.l2p_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.example.l2p_app.databinding.NavHeaderMainBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.provider.MediaStore;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
@@ -23,6 +31,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.l2p_app.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +45,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
@@ -39,10 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavHeaderMainBinding navHeaderMainBinding;
 
+    private FirebaseStorage firebaseStorage;
+    private FirebaseDatabase firebaseDatabase;
 
-    TextView navUsername;
-    ImageView navProfilePic;
-    TextView navEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,30 +64,51 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseStorage = FirebaseStorage.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        DatabaseReference db = firebaseDatabase.getReference("Users");
+        final DatabaseReference userReference = db.child(firebaseAuth.getUid());
+
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         navHeaderMainBinding = NavHeaderMainBinding.inflate(getLayoutInflater());
         binding.navView.addHeaderView(navHeaderMainBinding.getRoot());
         setContentView(binding.getRoot());
 
 
-        navHeaderMainBinding.headerUsername.setText(user.getDisplayName());
-        navHeaderMainBinding.headerEmail.setText(user.getEmail());
+        userReference.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
 
+                Log.d("a", dataSnapshot.child("name").getValue().toString());
+                Log.d("a", dataSnapshot.child("email").getValue().toString());
+                navHeaderMainBinding.headerUsername.setText(dataSnapshot.child("name").getValue().toString());
+                navHeaderMainBinding.headerEmail.setText(dataSnapshot.child("email").getValue().toString());
+            }
+        });
+        //navHeaderMainBinding.headerUsername.setText(user.getDisplayName());
+        //navHeaderMainBinding.headerEmail.setText(user.getEmail());
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
         NavigationView navigationView = binding.navView;
         DrawerLayout drawer = binding.drawerLayout;
 
-
-
-
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home).setOpenableLayout(drawer).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        StorageReference storageReference = firebaseStorage.getReference();
 
+        storageReference.child(firebaseAuth.getUid()).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d("TEST function", "intenta cambiar imagen en onCREATE");
+                Glide.with(MainActivity.this).load(uri).centerCrop().into(navHeaderMainBinding.headerImage);
+            }
+        });
 
         navigationView.getMenu().findItem(R.id.logout).setOnMenuItemClickListener(menuItem -> {
             firebaseAuth.signOut();
@@ -98,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,9 +154,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.logout: {
                 Log.d("a","no funciona");
                 Logout();
+                break;
             }
             default:
                 Log.d("id", Integer.toString(id));
+                break;
         }
 
         /*//noinspection SimplifiableIfStatement
@@ -143,6 +182,17 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    public void TEST(String name, Uri imagePath){
+        final StorageReference storageReference = firebaseStorage.getReference();
+        navHeaderMainBinding.headerUsername.setText(name);
+        if(imagePath != null) {
+            try {
+                navHeaderMainBinding.headerImage.setImageBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(),imagePath));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }
