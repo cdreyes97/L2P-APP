@@ -30,8 +30,7 @@ public class RoomContent extends Fragment {
     private DatabaseReference db;
     private TextView roomName, roomOwner, roomDescription;
     private Button joinRoomBtn;
-    private String gameName;
-    private String roomUID;
+    private String gameName, roomUID, ownerName;
     private ArrayAdapter<Room> adapter;
 
     public RoomContent() {
@@ -75,6 +74,7 @@ public class RoomContent extends Fragment {
                 room.setUID(snapshot.getKey());
                 roomName.setText(room.getName());
                 roomDescription.setText(room.getDescription());
+                roomOwner.setText(room.getOwnerName());
                 Log.d("snapshot", room.getUID());
 
             }
