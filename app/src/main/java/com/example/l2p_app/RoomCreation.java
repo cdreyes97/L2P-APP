@@ -29,6 +29,13 @@ public class RoomCreation extends Fragment {
     private Spinner playersInput = null;
     private DatabaseReference db;
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,7 +70,7 @@ public class RoomCreation extends Fragment {
                 newRoom.setValue(new Room(name, game, description, 5,1));
                 String roomKey = newRoom.getKey();
 
-                User user = new User("Admin");
+                User user = new User("a@a.com","Admin");
 
                 db = FirebaseDatabase.getInstance().getReference("room_participants");
                 DatabaseReference newRoomParticipants = db.child(roomKey).child("Admin");

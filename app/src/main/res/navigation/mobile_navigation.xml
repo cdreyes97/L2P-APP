@@ -31,7 +31,8 @@
         android:id="@+id/roomCreation"
         android:name="com.example.l2p_app.RoomCreation"
         android:label="@string/creation_form_label"
-        tools:layout="@layout/fragment_room_creation" />
+        tools:layout="@layout/fragment_room_creation" >
+    </fragment>
     <action
         android:id="@+id/action_global_roomCreation"
         app:destination="@id/roomCreation" />
@@ -40,6 +41,12 @@
         android:name="com.example.l2p_app.RoomContent"
         android:label="fragment_room_content"
         tools:layout="@layout/fragment_room_content" >
+        <argument
+            android:name="UID"
+            app:argType="string" />
+        <argument
+            android:name="game"
+            app:argType="string" />
         <action
             android:id="@+id/action_roomContent_to_sendRequest"
             app:destination="@id/sendRequest" />
@@ -57,6 +64,27 @@
         android:name="com.example.l2p_app.EditRoom"
         android:label="fragment_edit_room"
         tools:layout="@layout/fragment_edit_room" />
+    <activity
+        android:id="@+id/roomsActivity"
+        android:name="com.example.l2p_app.RoomsActivity"
+        android:label="activity_rooms"
+        tools:layout="@layout/activity_rooms" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.l2p_app.ProfileFragment"
+        android:label="Perfil de usuario"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfile"
+            app:destination="@id/editProfile" />
+    </fragment>
+    <action android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment" />
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.example.l2p_app.EditProfile"
+        android:label="Editar Información"
+        tools:layout="@layout/fragment_edit_profile" />
 
 
 </navigation>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
@@ -13,8 +12,8 @@
       android:layout_height="wrap_content"
       android:autofillHints=""
       android:ems="10"
-      android:hint="@string/input_text_hint"
-      android:inputType="numberPassword"
+      android:hint="@string/login_password"
+      android:inputType="textWebPassword"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -38,14 +37,53 @@
       android:id="@+id/name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:autofillHints=""
       android:ems="10"
-      android:hint="@string/enter_name"
-      android:inputType="textPersonName"
+      android:hint="@string/register_email"
+      android:inputType="textEmailAddress"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.326"
-      android:autofillHints="" />
+      app:layout_constraintVertical_bias="0.326" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <ProgressBar
+      android:id="@+id/pBar"
+      style="?android:attr/progressBarStyleSmallTitle"
+      android:minHeight="50dp"
+      android:minWidth="200dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="@id/btnLogin"
+      app:layout_constraintTop_toTopOf="@id/register"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      android:indeterminate="true"
+      android:visibility="gone"
+      >
+  </ProgressBar>
+
+
+  <TextView
+      android:id="@+id/register"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="70dp"
+      android:layout_marginLeft="70dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="8dp"
+      android:text="@string/register_login"
+      android:textSize="15sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintHorizontal_bias="0.25"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+      app:layout_constraintVertical_bias="0.379" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
