@@ -117,7 +117,7 @@ public class RoomsFragment extends Fragment {
                 holder.name.setText(room.getName());
                 holder.description.setText(room.getDescription());
                 holder.roomUID.setText(room.getUID());
-                holder.roomOwner.setText(room.getOwnerName());
+                holder.roomOwner.setText(room.getOwnerUID());
 
 
             }
@@ -155,7 +155,7 @@ public class RoomsFragment extends Fragment {
                     RoomsFragmentDirections.ActionNavRoomsToRoomContent action;
                     String stringRoomUID = roomUID.getText().toString();
                     String stringRoomOwner = roomOwner.getText().toString();
-                    action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID, gameName);
+                    action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID, gameName, stringRoomOwner);
                     NavHostFragment.findNavController(RoomsFragment.this)
                             .navigate((NavDirections) action);
 
