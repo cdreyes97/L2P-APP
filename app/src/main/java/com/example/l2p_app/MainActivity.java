@@ -8,7 +8,9 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.example.l2p_app.databinding.NavHeaderMainBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -34,6 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -81,14 +84,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
 
-                Log.d("a", dataSnapshot.child("name").getValue().toString());
-                Log.d("a", dataSnapshot.child("email").getValue().toString());
                 navHeaderMainBinding.headerUsername.setText(dataSnapshot.child("name").getValue().toString());
                 navHeaderMainBinding.headerEmail.setText(dataSnapshot.child("email").getValue().toString());
             }
         });
-        //navHeaderMainBinding.headerUsername.setText(user.getDisplayName());
-        //navHeaderMainBinding.headerEmail.setText(user.getEmail());
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         storageReference.child(firebaseAuth.getUid()).child("Images/Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Log.d("TEST function", "intenta cambiar imagen en onCREATE");
                 Glide.with(MainActivity.this).load(uri).centerCrop().into(navHeaderMainBinding.headerImage);
             }
         });
@@ -120,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         navHeaderMainBinding.headerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, ProfileActivity.class));
                 navController.navigate(R.id.action_global_profileFragment);
             }
         });
@@ -130,6 +127,40 @@ public class MainActivity extends AppCompatActivity {
                 navController.navigate(R.id.action_global_roomCreation);
             }
         });*/
+
+        //Notificaciones Obtener token FCM
+        FirebaseMessaging.getInstance().getToken()
+            .addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                  if (!task.isSuccessful()) {
+                    Log.w("Main ACtivity", "Fetching FCM registration token failed", task.getException());
+                    return;
+                  }
+
+                  // Get new FCM registration token
+                  String token = task.getResult();
+
+                  // Log and toast
+                  String msg = getString(R.string.msg_token_fmt, token);
+                  Log.d("Main ACtivity", msg);
+                  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = getString(R.string.msg_subscribed);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.msg_subscribe_failed);
+                        }
+                        Log.d("MAIN ACTIVITY", msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
     }
 
