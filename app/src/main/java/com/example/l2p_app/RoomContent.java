@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.l2p_app.databinding.FragmentRoomContentBinding;
@@ -22,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoomContent extends Fragment {
 
     private FragmentRoomContentBinding binding;
@@ -29,9 +33,12 @@ public class RoomContent extends Fragment {
     private View roomView;
     private DatabaseReference db;
     private TextView roomName, roomOwner, roomDescription;
+    private ListView membersListView;
     private Button joinRoomBtn;
     private String gameName, roomUID, ownerName;
-    private ArrayAdapter<Room> adapter;
+    private ArrayAdapter<String> adapter;
+    private ArrayList<String> members;
+
 
     public RoomContent() {
         // Required empty public constructor
@@ -53,6 +60,7 @@ public class RoomContent extends Fragment {
         roomDescription = binding.roomDescription;
         roomOwner = binding.roomOwner;
         joinRoomBtn = binding.joinRoomBtn;
+        membersListView = binding.listOfMembers;
 
 
 
@@ -85,12 +93,40 @@ public class RoomContent extends Fragment {
             }
         });
 
+        members = new ArrayList<>();
+
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, members);
+
+        membersListView.setAdapter(adapter);
+
+        db = FirebaseDatabase.getInstance().getReference("room_participants/" + roomUID);
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String member = ds.getValue().toString();
+                    Log.d("member", member);
+                    members.add(member);
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         joinRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("join", "yes");
             }
         });
+
 
         return binding.getRoot();
     }
@@ -99,4 +135,6 @@ public class RoomContent extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+
 }
