@@ -6,7 +6,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -108,6 +110,9 @@ public class RegistrationActivity extends AppCompatActivity {
                                 //sendEmailVerification()
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 user.updateProfile(profileUpdates);
+                                if(imagePath == null){
+                                    imagePath = Uri.parse("android.resource://"+"com.example.l2p_app"+"/drawable/blank_profile_picture");
+                                }
                                 sendUserData();
                                 firebaseAuth.signOut();
                                 Toast.makeText(RegistrationActivity.this, "Registrado exitosamente!", Toast.LENGTH_SHORT).show();
