@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class RequestsFragment extends Fragment {
@@ -48,18 +50,23 @@ public class RequestsFragment extends Fragment {
 
         requests = new ArrayList<>();
 
-        rv = requestList.findViewById(R.id.roomsListFragment);
+        rv = requestList.findViewById(R.id.requestListFragment);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        db = FirebaseDatabase.getInstance().getReference("Requests");
+        db = FirebaseDatabase.getInstance().getReference("request_per_room/Valorant/-Mbmgf9fxQqNxo7oJJNG"); //-MbsrXTO5GIW5VMCiA7Z");
         db.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                System.out.println("01");
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    System.out.println(ds.getValue());
                     Request request = ds.getValue(Request.class);
+                    System.out.println("2");
                     requests.add(request);
+                    System.out.println("3");
                 }
+                System.out.println("02");
                 //adapter.notifyDataSetChanged();
             }
 
@@ -91,8 +98,11 @@ public class RequestsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull RequestsFragment.MyViewHolder holder, int position, @NonNull Request model) {
                 Request request = requests.get(position);
-                holder.user.setText(request.getUserName());
-                holder.message.setText(request.getMessage());
+                Log.d("game", "loggeando");
+
+                holder.requestUser.setText(request.getUserName());
+                Log.d("game", "works?");
+//                holder.message.setText(request.getMessage());
             }
 
             @NonNull
@@ -107,16 +117,29 @@ public class RequestsFragment extends Fragment {
         adapter.startListening();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    /*public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView user, message;
+        private TextView user, room, message;
         public View view;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
-            user = itemView.findViewById(R.id.requestUser);
-            //message = itemView.findViewById(R.id.requestMessage);
+            room = itemView.findViewById(R.id.roomName);
+            user = itemView.findViewById(R.id.userName);
+            message = itemView.findViewById(R.id.userMessage);
+        }
+    }*/
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView requestUser;
+        public View view;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            view = itemView;
+            requestUser = itemView.findViewById(R.id.requestUser);
         }
     }
 

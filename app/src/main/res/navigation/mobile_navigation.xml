@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_rooms"
             app:destination="@id/nav_rooms" />
+        <action
+            android:id="@+id/action_nav_home_to_requestsFragment"
+            app:destination="@id/nav_requests" />
     </fragment>
 
     <fragment
@@ -96,6 +99,11 @@
         android:name="com.example.l2p_app.EditProfile"
         android:label="Editar Información"
         tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/nav_requests"
+        android:name="com.example.l2p_app.RequestsFragment"
+        android:label="fragment_requests"
+        tools:layout="@layout/fragment_requests" />
 
 
 </navigation>

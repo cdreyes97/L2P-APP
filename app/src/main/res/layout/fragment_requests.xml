@@ -23,6 +23,7 @@
             android:text="Solicitudes (1)" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/requestListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
