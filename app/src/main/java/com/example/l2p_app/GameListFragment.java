@@ -25,6 +25,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.l2p_app.databinding.GameListBinding;
@@ -46,6 +47,7 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
     String TOPIC;
+    String USER_TOKEN;
 
     private View gameListView;
     private GameListBinding binding;
@@ -89,13 +91,13 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Descomentar esto si se quiere navegar a creacion de sala
-                //Navigation.findNavController(view).navigate(R.id.action_global_roomCreation);
+                Navigation.findNavController(view).navigate(R.id.action_global_roomCreation);
+                /*
 
-                //y comentar todo lo de abajo
                 TOPIC = "/topics/userABC"; //topic must match with what the receiver subscribed to
                 NOTIFICATION_TITLE = "Nueva solicitud";
-                NOTIFICATION_MESSAGE = "Tienes una nueva solicitud para la sala XXXXXX"; //tomar nombre de sala
+                NOTIFICATION_MESSAGE = "Tienes una nueva solicitud para la sala NUEVA SALA"; //tomar nombre de sala
+                USER_TOKEN = "eLsbe_nnRpKRQhv19Fnuy2:APA91bE9WJrRYjTAWJhjrHd7_2NtJz1gujGnpBTbZKqszDZsX9JrNMLmDfK2oElYmtwzAZLYWJsq3mPnK1U46Vay9635IAzQJYWMVZ7G2ybW445U0ratFU2w6La61DP5TqiM9sNuoxvf";
 
                 JSONObject notification = new JSONObject();
                 JSONObject notifcationBody = new JSONObject();
@@ -108,17 +110,17 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
                     }
                     time_to_live: "600" opcional
                 }
-                * */
                 try {
                     notifcationBody.put("title", NOTIFICATION_TITLE);
                     notifcationBody.put("message", NOTIFICATION_MESSAGE);
 
-                    notification.put("to", TOPIC);
+                    notification.put("to", USER_TOKEN);
                     notification.put("data", notifcationBody);
+                    notification.put("time_to_live", 600);
                 } catch (JSONException e) {
                     Log.e(TAG, "onCreate: " + e.getMessage() );
                 }
-                sendNotification(notification);
+                sendNotification(notification);*/
             }
         });
     }
