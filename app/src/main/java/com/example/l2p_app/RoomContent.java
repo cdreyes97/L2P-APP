@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -140,7 +142,10 @@ public class RoomContent extends Fragment {
         joinRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("join", "yes");
+                RoomContentDirections.ActionRoomContentToSendRequest action;
+                action = RoomContentDirections.actionRoomContentToSendRequest(gameName, roomUID);
+                NavHostFragment.findNavController(RoomContent.this)
+                        .navigate((NavDirections) action);
             }
         });
 

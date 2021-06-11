@@ -2,21 +2,43 @@ package com.example.l2p_app.models;
 
 public class Request {
 
-    private String User;
+    public enum Status {
+        PENDING,
+        ACCEPTED,
+        REJECTED
+    }
+
+    private String userName;
+    private String userUID;
     private String message;
-    private String RoomId;
-    private String RequestId;
-    private String Status;
+    private String RoomUID;
+    private Status Status;
 
     public Request() {
     }
 
-    public String getUser() {
-        return User;
+    public Request(String userName, String userUID, String message, String roomUID, Request.Status status) {
+        this.userName = userName;
+        this.userUID = userUID;
+        this.message = message;
+        RoomUID = roomUID;
+        Status = status;
     }
 
-    public void setUser(String user) {
-        User = user;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserUID() {
+        return userUID;
+    }
+
+    public void setUserUID(String userUID) {
+        this.userUID = userUID;
     }
 
     public String getMessage() {
@@ -27,27 +49,19 @@ public class Request {
         this.message = message;
     }
 
-    public String getRoomId() {
-        return RoomId;
+    public String getRoomUID() {
+        return RoomUID;
     }
 
-    public void setRoomId(String roomId) {
-        RoomId = roomId;
+    public void setRoomUID(String roomUID) {
+        RoomUID = roomUID;
     }
 
-    public String getRequestId() {
-        return RequestId;
-    }
-
-    public void setRequestId(String requestId) {
-        RequestId = requestId;
-    }
-
-    public String getStatus() {
+    public Request.Status getStatus() {
         return Status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Request.Status status) {
         Status = status;
     }
 }

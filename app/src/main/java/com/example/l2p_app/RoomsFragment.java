@@ -117,8 +117,8 @@ public class RoomsFragment extends Fragment {
                 holder.name.setText(room.getName());
                 holder.description.setText(room.getDescription());
                 holder.roomUID.setText(room.getUID());
-                holder.roomOwner.setText(room.getOwnerUID());
-
+                holder.roomOwner.setText(room.getOwnerName());
+                holder.ownerUID.setText(room.getOwnerUID());
 
             }
 
@@ -136,7 +136,7 @@ public class RoomsFragment extends Fragment {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name, description, roomUID, roomOwner;
+        private TextView name, description, roomUID, roomOwner, ownerUID;
         public View view;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -146,6 +146,7 @@ public class RoomsFragment extends Fragment {
             description = itemView.findViewById(R.id.roomDesc);
             roomUID = itemView.findViewById(R.id.roomUID);
             roomOwner = itemView.findViewById(R.id.roomOwner);
+            ownerUID = itemView.findViewById(R.id.ownerUID);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +155,7 @@ public class RoomsFragment extends Fragment {
                     //Log.d("Card clicked", "yes");
                     RoomsFragmentDirections.ActionNavRoomsToRoomContent action;
                     String stringRoomUID = roomUID.getText().toString();
-                    String stringRoomOwner = roomOwner.getText().toString();
+                    String stringRoomOwner = ownerUID.getText().toString();
                     action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID, gameName, stringRoomOwner);
                     NavHostFragment.findNavController(RoomsFragment.this)
                             .navigate((NavDirections) action);

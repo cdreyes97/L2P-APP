@@ -61,7 +61,15 @@
         android:id="@+id/sendRequest"
         android:name="com.example.l2p_app.SendRequest"
         android:label="fragment_send_request"
-        tools:layout="@layout/fragment_send_request" />
+        tools:layout="@layout/fragment_send_request" >
+        <argument
+            android:name="game"
+            app:argType="string" />
+        <argument
+            android:name="roomUID"
+            app:argType="string" />
+
+    </fragment>
     <fragment
         android:id="@+id/editRoom"
         android:name="com.example.l2p_app.EditRoom"
