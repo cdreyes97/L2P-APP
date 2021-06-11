@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseMessaging.getInstance().subscribeToTopic("userABC");
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                   // Log and toast
                   String msg = getString(R.string.msg_token_fmt, token);
                   Log.d("Main ACtivity", msg);
-                  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }
             });
 
