@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.l2p_app.databinding.FragmentRoomContentBinding;
 import com.example.l2p_app.models.Room;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,10 +37,11 @@ public class RoomContent extends Fragment {
     private DatabaseReference db;
     private TextView roomName, roomOwner, roomDescription;
     private ListView membersListView;
-    private Button joinRoomBtn;
-    private String gameName, roomUID, ownerName;
+    private Button joinRoomBtn, editRoomBtn, deleteRoomBtn, viewRequestBtn;
+    private String gameName, roomUID, ownerUID;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> members;
+    private FirebaseAuth firebaseAuth;
 
 
     public RoomContent() {
@@ -60,16 +64,31 @@ public class RoomContent extends Fragment {
         roomDescription = binding.roomDescription;
         roomOwner = binding.roomOwner;
         joinRoomBtn = binding.joinRoomBtn;
+        editRoomBtn = binding.editBtn;
+        deleteRoomBtn = binding.deleteBtn;
+        viewRequestBtn = binding.viewRequestBtn;
         membersListView = binding.listOfMembers;
-
-
+        firebaseAuth = FirebaseAuth.getInstance();
 
 
         gameName = RoomContentArgs.fromBundle(getArguments()).getGame();
         roomUID = RoomContentArgs.fromBundle(getArguments()).getUID();
+        ownerUID = RoomContentArgs.fromBundle(getArguments()).getOwner();
 
-        Log.d("Game recieved", gameName);
-        Log.d("Room UID", roomUID);
+        if (ownerUID.equals(firebaseAuth.getCurrentUser().getUid())) {
+            joinRoomBtn.setVisibility(View.GONE);
+            editRoomBtn.setVisibility(View.VISIBLE);
+            viewRequestBtn.setVisibility(View.VISIBLE);
+            deleteRoomBtn.setVisibility(View.VISIBLE);
+        } else {
+            joinRoomBtn.setVisibility(View.VISIBLE);
+            editRoomBtn.setVisibility(View.GONE);
+            viewRequestBtn.setVisibility(View.GONE);
+            deleteRoomBtn.setVisibility(View.GONE);
+        }
+
+        Log.d("My UID", firebaseAuth.getCurrentUser().getUid());
+        Log.d("Owner UID", ownerUID);
 
         db = FirebaseDatabase.getInstance().getReference("Rooms/" + gameName + "/" + roomUID);
 
@@ -123,7 +142,10 @@ public class RoomContent extends Fragment {
         joinRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("join", "yes");
+                RoomContentDirections.ActionRoomContentToSendRequest action;
+                action = RoomContentDirections.actionRoomContentToSendRequest(gameName, roomUID);
+                NavHostFragment.findNavController(RoomContent.this)
+                        .navigate((NavDirections) action);
             }
         });
 

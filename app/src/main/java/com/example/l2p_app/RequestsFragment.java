@@ -91,7 +91,7 @@ public class RequestsFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull RequestsFragment.MyViewHolder holder, int position, @NonNull Request model) {
                 Request request = requests.get(position);
-                holder.user.setText(request.getUser());
+                holder.user.setText(request.getUserName());
                 holder.message.setText(request.getMessage());
             }
 
