@@ -1,20 +1,31 @@
 package com.example.l2p_app;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import com.example.l2p_app.adapters.RoomAdapter;
 import com.example.l2p_app.models.Room;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,13 +41,21 @@ public class RoomsActivity extends AppCompatActivity {
     private RoomAdapter adapter;
     private ArrayList<Room> rooms;
     private String game;
+    private FirebaseAuth firebaseAuth;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rooms);
 
+
         game = getIntent().getStringExtra("game");
+
+
 
         Log.d("Game recieved", game);
 
@@ -56,6 +75,7 @@ public class RoomsActivity extends AppCompatActivity {
 
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Room room = ds.getValue(Room.class);
+                    room.setUID(ds.getKey());
                     rooms.add(room);
                 }
                 adapter.notifyDataSetChanged();
@@ -68,6 +88,15 @@ public class RoomsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        setTitle("Salas");
 
+        MenuItem item = menu.add("Inicio");
+        item.setIcon(R.drawable.donut_circle);
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
 }

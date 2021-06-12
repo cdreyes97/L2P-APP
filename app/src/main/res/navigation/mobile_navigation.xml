@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_home_to_requestsFragment"
             app:destination="@id/nav_requests" />
+        <action
+            android:id="@+id/action_nav_home_to_roomsActivity2"
+            app:destination="@id/roomsActivity" />
     </fragment>
 
     <fragment
@@ -81,7 +84,7 @@
     <activity
         android:id="@+id/roomsActivity"
         android:name="com.example.l2p_app.RoomsActivity"
-        android:label="activity_rooms"
+        android:label="Salas"
         tools:layout="@layout/activity_rooms" />
     <fragment
         android:id="@+id/profileFragment"

@@ -1,6 +1,8 @@
 package com.example.l2p_app.models;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable {
 
     private String UID;
     private String ownerUID;
