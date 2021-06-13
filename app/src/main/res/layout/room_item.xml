@@ -6,14 +6,15 @@
     android:clickable="true"
     app:cardElevation="8dp"
     app:cardCornerRadius="8dp"
-    android:layout_margin="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
     android:id="@+id/cardView">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:padding="16dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -68,41 +69,24 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/roomName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:text="Christian's Room"
+            />
 
-            <TextView
-                android:id="@+id/roomName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:text="Christian's Room"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/roomOwner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/roomOwner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
-                android:text="cdreyes" />
-
-        </LinearLayout>
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="16sp"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:textColor="?android:attr/textColorSecondary"
+            android:text="cdreyes" />
 
 
         <View
@@ -111,23 +95,14 @@
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/roomDesc"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/roomDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="@color/black"
-                android:text="Above Gold players" />
-
-        </LinearLayout>
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:text="Above Gold players" />
 
     </LinearLayout>
 
