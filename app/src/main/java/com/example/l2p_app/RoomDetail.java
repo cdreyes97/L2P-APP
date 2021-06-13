@@ -2,6 +2,8 @@ package com.example.l2p_app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,11 +34,14 @@ public class RoomDetail extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<String> members;
     private FirebaseAuth firebaseAuth;
+    private FragmentManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_room_content);
+
+        manager = getSupportFragmentManager();
 
         room = (Room) getIntent().getExtras().getSerializable("room");
 
@@ -95,7 +100,18 @@ public class RoomDetail extends AppCompatActivity {
             }
         });
 
-
+        joinRoomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("game", room.getGame());
+                bundle.putString("roomUID", room.getUID());
+                SendRequest fragment = new SendRequest();
+                fragment.setArguments(bundle);
+                fragment.show(getSupportFragmentManager(), "Solicitud");
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            }
+        });
 
 
 
