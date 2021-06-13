@@ -16,6 +16,8 @@ import android.widget.EditText;
 
 import com.example.l2p_app.databinding.FragmentSendRequestBinding;
 import com.example.l2p_app.models.Request;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SendRequest extends DialogFragment {
 
     private FragmentSendRequestBinding binding;
-    private EditText msgRequest;
+    private TextInputLayout msgRequest;
     private Button sendRequestBtn, cancelBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference db;
@@ -43,6 +45,8 @@ public class SendRequest extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        new MaterialAlertDialogBuilder(getContext()).show();
 
         binding = FragmentSendRequestBinding.inflate(inflater, container, false);
 
@@ -70,7 +74,7 @@ public class SendRequest extends DialogFragment {
 
                 String userName = firebaseAuth.getCurrentUser().getDisplayName();
                 String userUID = firebaseAuth.getCurrentUser().getUid();
-                String stringMsgRequest = msgRequest.getText().toString();
+                String stringMsgRequest = msgRequest.getEditText().getText().toString();
 
                 Request request = new Request(userName, userUID, stringMsgRequest, roomUID, Request.Status.PENDING);
 
