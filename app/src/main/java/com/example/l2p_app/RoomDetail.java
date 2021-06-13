@@ -1,12 +1,14 @@
 package com.example.l2p_app;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,9 +43,14 @@ public class RoomDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_room_content);
 
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         manager = getSupportFragmentManager();
 
         room = (Room) getIntent().getExtras().getSerializable("room");
+
+        setTitle(room.getName());
 
         roomName = findViewById(R.id.roomName);
         roomOwner = findViewById(R.id.roomOwner);
@@ -113,8 +120,16 @@ public class RoomDetail extends AppCompatActivity {
             }
         });
 
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

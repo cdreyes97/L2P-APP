@@ -55,7 +55,8 @@ public class RoomsActivity extends AppCompatActivity {
 
         game = getIntent().getStringExtra("game");
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(game);
 
         Log.d("Game recieved", game);
 
@@ -89,14 +90,16 @@ public class RoomsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        setTitle("Salas");
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        MenuItem item = menu.add("Inicio");
-        item.setIcon(R.drawable.donut_circle);
-
-        return super.onCreateOptionsMenu(menu);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+
 
 }
