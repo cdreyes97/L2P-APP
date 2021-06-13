@@ -17,7 +17,7 @@
         android:textSize="10pt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/form_name"
@@ -43,16 +43,18 @@
         app:layout_constraintStart_toStartOf="@+id/form_name"
         app:layout_constraintTop_toBottomOf="@+id/form_name" />
 
-    <Spinner
+    <EditText
         android:id="@+id/form_players"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:prompt="@string/game1"
-        android:entries="@array/gameList"
+        android:hint="Número de participantes"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="@+id/form_games"
         app:layout_constraintStart_toStartOf="@+id/form_games"
         app:layout_constraintTop_toBottomOf="@+id/form_games" />
+
+
 
     <EditText
         android:id="@+id/form_description"
@@ -78,6 +80,16 @@
         app:layout_constraintEnd_toEndOf="@+id/form_description"
         app:layout_constraintStart_toStartOf="@+id/form_description"
         app:layout_constraintTop_toBottomOf="@+id/form_description" />
+
+    <Button
+        android:id="@+id/form_button_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:backgroundTint="#F44336"
+        android:text="Cancelar"
+        app:layout_constraintEnd_toEndOf="@+id/form_button"
+        app:layout_constraintStart_toStartOf="@+id/form_button"
+        app:layout_constraintTop_toBottomOf="@+id/form_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

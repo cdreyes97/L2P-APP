@@ -27,7 +27,7 @@ public class RoomCreation extends Fragment {
     private EditText nameInput = null;
     private EditText descriptionInput = null;
     private Spinner  gameInput = null;
-    private Spinner playersInput = null;
+    private EditText playersInput = null;
     private DatabaseReference db;
     private FirebaseAuth firebaseAuth;
 
@@ -52,6 +52,8 @@ public class RoomCreation extends Fragment {
         gameInput =  roomCreationView.findViewById(R.id.form_games);
         playersInput = roomCreationView.findViewById(R.id.form_players);
 
+
+
         return  roomCreationView;
     }
 
@@ -62,6 +64,8 @@ public class RoomCreation extends Fragment {
             @Override
             public void onClick(View view) {
 
+
+
                 firebaseAuth = FirebaseAuth.getInstance();
 
                 String name = nameInput.getText().toString();
@@ -69,11 +73,12 @@ public class RoomCreation extends Fragment {
                 String description = descriptionInput.getText().toString();
                 String ownerUID = firebaseAuth.getCurrentUser().getUid();
                 String ownerName = firebaseAuth.getCurrentUser().getDisplayName();
+                Integer numPlayers = Integer.parseInt(playersInput.getText().toString());
 
                 db = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
 
                 DatabaseReference newRoom = db.push();
-                newRoom.setValue(new Room(name, ownerUID, ownerName, game, description, 5,1));
+                newRoom.setValue(new Room(name, ownerUID, ownerName, game, description, numPlayers,1));
                 String roomKey = newRoom.getKey();
 
                 //User user = new User("a@a.com","Admin");
@@ -90,10 +95,21 @@ public class RoomCreation extends Fragment {
                 //Log.d("a",nameInput.getText().toString());
                 //Log.d("a",gameInput.getSelectedItem().toString());
                 Log.d("Creating Room", roomKey);
+
+                NavHostFragment.findNavController(RoomCreation.this).popBackStack();
+
+            }
+        });
+        roomCreationView.findViewById(R.id.form_button_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavHostFragment.findNavController(RoomCreation.this).popBackStack();
             }
         });
 
     }
+
+
 
 
 }

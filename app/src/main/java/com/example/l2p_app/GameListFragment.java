@@ -165,6 +165,7 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         String game;
         GameListFragmentDirections.ActionNavHomeToNavRooms action;
+        Intent intent = new Intent(getActivity(), RoomsActivity.class);
         switch (view.getId()){
             case R.id.imageView:
                 game = "Valorant";
@@ -172,15 +173,18 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
                 NavHostFragment.findNavController(GameListFragment.this)
                         .navigate((NavDirections) action);*/
-                Intent intent = new Intent(getActivity(), RoomsActivity.class);
+
                 intent.putExtra("game", game);
                 startActivity(intent);
                 break;
             case R.id.imageView2:
                 game = "Overwatch";
+                /*
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
                 NavHostFragment.findNavController(GameListFragment.this)
-                        .navigate((NavDirections) action);
+                        .navigate((NavDirections) action);*/
+                intent.putExtra("game", game);
+                startActivity(intent);
                 break;
         }
 
