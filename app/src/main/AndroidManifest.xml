@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.L2PAPP">
-        <activity android:name=".RoomDetail"></activity>
+        <activity android:name=".MyRequests"></activity>
+        <activity android:name=".RoomDetail" />
 
         <service
             android:name=".L2PFirebaseMessagingService"

@@ -3,15 +3,17 @@ package com.example.l2p_app.models;
 public class Request {
 
     public enum Status {
-        PENDING,
-        ACCEPTED,
-        REJECTED
+        PENDIENTE,
+        ACEPTADO,
+        RECHAZADO
     }
 
     private String userName;
     private String userUID;
     private String message;
     private String RoomUID;
+    private String roomGame;
+    private String roomOwner;
     private Status Status;
 
     public Request() {
@@ -24,6 +26,8 @@ public class Request {
         RoomUID = roomUID;
         Status = status;
     }
+
+
 
     public String getUserName() {
         return userName;
