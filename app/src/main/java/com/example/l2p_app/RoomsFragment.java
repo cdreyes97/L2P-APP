@@ -63,6 +63,7 @@ public class RoomsFragment extends Fragment {
 
         binding = FragmentRoomsBinding.inflate(inflater, container, false);
 
+
         //roomsList = inflater.inflate(R.layout.fragment_rooms, container, false);
 
         rooms = new ArrayList<>();

@@ -23,7 +23,7 @@ import com.example.l2p_app.models.Room;
 
 import java.util.ArrayList;
 
-public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder>{
 
     Context context;
 

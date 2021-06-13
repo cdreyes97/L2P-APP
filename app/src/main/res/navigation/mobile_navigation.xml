@@ -108,6 +108,18 @@
         android:label="fragment_requests"
         tools:layout="@layout/fragment_requests" />
     <activity
+        android:id="@+id/nav_my_rooms"
+        android:name="com.example.l2p_app.MyRoomsActivity"
+        android:label="activity_my_rooms"
+        tools:layout="@layout/activity_my_rooms">
+        <!--<argument
+            android:name="game"
+            app:argType="string" />
+        <argument
+            android:name="roomUID"
+            app:argType="string" />-->
+    </activity>
+    <activity
         android:id="@+id/myRequests"
         android:name="com.example.l2p_app.MyRequests"
         android:label="activity_my_requests"
