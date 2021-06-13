@@ -1,5 +1,6 @@
 package com.example.l2p_app;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,7 @@ public class SendRequest extends DialogFragment {
 
     private FragmentSendRequestBinding binding;
     private EditText msgRequest;
-    private Button sendRequestBtn;
+    private Button sendRequestBtn, cancelBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference db;
     private String game, roomUID;
@@ -47,6 +48,7 @@ public class SendRequest extends DialogFragment {
 
         game = SendRequestArgs.fromBundle(getArguments()).getGame();
         roomUID = SendRequestArgs.fromBundle(getArguments()).getRoomUID();
+        cancelBtn = binding.cancelBtn;
 
         msgRequest = binding.msgRequest;
         sendRequestBtn = binding.sendRequest;
@@ -55,6 +57,7 @@ public class SendRequest extends DialogFragment {
 
         return binding.getRoot();
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -82,6 +85,13 @@ public class SendRequest extends DialogFragment {
 
                 getDialog().dismiss();
 
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().dismiss();
             }
         });
 
