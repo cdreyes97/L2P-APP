@@ -2,27 +2,18 @@ package com.example.l2p_app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 //import com.example.l2p_app.adapters.MyRoomsAdapter;
-import com.example.l2p_app.adapters.RoomAdapter;
-import com.example.l2p_app.databinding.ActivityMainBinding;
+import com.example.l2p_app.adapters.TabsAdapter;
 import com.example.l2p_app.databinding.ActivityMyRoomsBinding;
-import com.example.l2p_app.databinding.NavHeaderMainBinding;
 import com.example.l2p_app.models.Room;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -32,7 +23,7 @@ public class MyRoomsActivity extends AppCompatActivity {
     private DatabaseReference db;
     private ArrayList<Room> rooms;
     private String game;
-    //private MyRoomsAdapter roomAdapter;
+    private TabsAdapter roomAdapter;
     private TextView[] dots;
     private int[] layouts;
     private ActivityMyRoomsBinding binding;
@@ -46,11 +37,12 @@ public class MyRoomsActivity extends AppCompatActivity {
         binding = ActivityMyRoomsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0);
 
         rooms = new ArrayList<>();
-        //roomAdapter = new MyRoomsAdapter(this);
-        //binding.pager.setAdapter(roomAdapter);
+        roomAdapter = new TabsAdapter(this);
+        binding.pager.setAdapter(roomAdapter);
 
         new TabLayoutMediator(binding.tabLayout, binding.pager,
                 (tab, position) -> tab.setText(titles[position])).attach();
@@ -87,6 +79,17 @@ public class MyRoomsActivity extends AppCompatActivity {
             }
         });*/
         //init();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

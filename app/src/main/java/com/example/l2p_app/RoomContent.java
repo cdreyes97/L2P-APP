@@ -75,7 +75,8 @@ public class RoomContent extends Fragment {
         roomUID = RoomContentArgs.fromBundle(getArguments()).getUID();
         ownerUID = RoomContentArgs.fromBundle(getArguments()).getOwner();
 
-        if (ownerUID.equals(firebaseAuth.getCurrentUser().getUid())) {
+        if (ownerUID.equals("DGGC7N78yESopoiqWdd8U9Ld8Zz1")) {
+            Log.d("ROOM CONTONE","YES");
             joinRoomBtn.setVisibility(View.GONE);
             editRoomBtn.setVisibility(View.VISIBLE);
             viewRequestBtn.setVisibility(View.VISIBLE);

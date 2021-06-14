@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.l2p_app.adapters.MyRoomsAdapter;
+import com.example.l2p_app.adapters.RoomAdapter;
 import com.example.l2p_app.databinding.FragmentMyRoomListBinding;
 import com.example.l2p_app.databinding.FragmentRoomsBinding;
 import com.example.l2p_app.models.Room;
@@ -44,11 +47,10 @@ public class MyRoomsListFragment extends Fragment {
     private FragmentMyRoomListBinding binding;
     private FirebaseAuth firebaseAuth;
     private String gameName;
-    private int tabNumber;
     private String userUID;
+    private MyRoomsAdapter adapter;
 
-    public MyRoomsListFragment(int position) {
-        this.tabNumber = position;
+    public MyRoomsListFragment() {
         // Required empty public constructor
     }
     @Override
@@ -65,66 +67,62 @@ public class MyRoomsListFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         userUID = firebaseAuth.getCurrentUser().getUid();
-        userUID = "h45rDL5PZBQqVtaqRyJwo8I4uED3";
-        if(this.tabNumber == 0){
-            db = FirebaseDatabase.getInstance().getReference("room_owner/" + userUID);
-            db = FirebaseDatabase.getInstance().getReference("room_owner/h45rDL5PZBQqVtaqRyJwo8I4uED3");
-            Log.d("POSITION", "BUSCAR MIS SALAS");
-        }
-        else if(this.tabNumber == 1){
-            db = FirebaseDatabase.getInstance().getReference("room_participants");
-            Log.d("POSITION", "BUSCAR SALAS DONDE PARTICIPO");
-        }
+        db = FirebaseDatabase.getInstance().getReference("room_owner/" + userUID);
+        Log.d("POSITION", "BUSCAR MIS SALAS");
+
 
 
         binding = FragmentMyRoomListBinding.inflate(inflater, container, false);
 
         rooms = new ArrayList<>();
 
-        rv = binding.myRoomsListFragment;
+        rv = binding.myRoomsListRv;
+        rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adapter = new MyRoomsAdapter(getContext(), rooms);
+
+        rv.setAdapter(adapter);
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                if(tabNumber == 0 ) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-
-                        String roomName = ds.getValue().toString();
-                        Room room = new Room();
-                        room.setName(roomName);
-                        room.setUID(ds.getKey());
-                        Log.d("OBTENER SALA", ds.getValue().toString());
-                        //Log.d("OBTENER SALA",ds.getValue().toString());
-                        rooms.add(room);
-                        Log.d("UID", room.getUID());
-
-                    }
-                }else if(tabNumber == 1){
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        if (ds.hasChild(userUID)){
-                            Log.d("HAS", "TIENE al usuario cdreyes");
-                            Room room = new Room();
-                            ds.child("participants");
-                            //room.setName();
-                            //room.setUID(ds.getKey());
-
-
-                        }
-                        //String roomName = ds.getValue().toString();
-                        //Room room = new Room();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    for (DataSnapshot dsRoom : ds.getChildren()) {
+                        String roomName = dsRoom.getValue().toString();
+                        String game = ds.getKey();
+                        String roomUID = dsRoom.getKey();
+                        gameName = game;
                         //room.setName(roomName);
-                        //room.setUID(ds.getKey());
-                        Log.d("OBTENER SALA tab 1","sala: "+ ds.getKey() + " participantes: " + ds.getValue().toString());
-                        Log.d("VALOR OBJECTO DS",ds.getValue().toString());
-                        Log.d("OBJECTO DS",ds.toString());
+                        DatabaseReference roomReference = FirebaseDatabase.getInstance().getReference("Rooms/"+gameName+"/"+roomUID);
+                        roomReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                                Room roomObject = snapshot.getValue(Room.class);
+                                roomObject.setUID(roomUID);
+                                rooms.add(roomObject);
+                                //Room room = new Room();
+                                //room = roomReference.get().getResult().getValue(Room.class);
+                                //room.setGame(game);
+                                Log.d("OBTENER SALA", roomObject.getName());
+                                //Log.d("OBTENER SALA GAME", game);
+                                //room.setUID(dsRoom.getKey());
+                                //rooms.add(room);
+                                //Log.d("UID", room.getUID());
+                                adapter.notifyDataSetChanged();
 
-                        //rooms.add(room);
-                        //Log.d("UID", room.getUID());
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull  DatabaseError error) {
+
+                            }
+                        });
                     }
 
                 }
+
 
             }
 
@@ -146,7 +144,7 @@ public class MyRoomsListFragment extends Fragment {
 
 
 
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
         FirebaseRecyclerOptions options =
@@ -157,13 +155,16 @@ public class MyRoomsListFragment extends Fragment {
         FirebaseRecyclerAdapter<Object, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Object, MyViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MyRoomsListFragment.MyViewHolder holder, int position, @NonNull Object model) {
-                Room room = rooms.get(position);
-                //String room = rooms.get(position);
-                holder.name.setText(room.getName());
-                //holder.description.setText(room.getDescription());
-                holder.roomUID.setText(room.getUID());
-                //holder.roomOwner.setText(room.getOwnerName());
-                //holder.ownerUID.setText(room.getOwnerUID());
+                if(rooms.size() != 0){
+                    Room room = rooms.get(position);
+                    //String room = rooms.get(position);
+                    holder.name.setText(room.getName());
+                    //holder.description.setText(room.getDescription());
+                    holder.gameTextView.setText(room.getGame());
+                    holder.roomUID.setText(room.getUID());
+                    //holder.roomOwner.setText(room.getOwnerName());
+                    //holder.ownerUID.setText(room.getOwnerUID());
+                }
 
             }
 
@@ -181,13 +182,14 @@ public class MyRoomsListFragment extends Fragment {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name, description, roomUID, roomOwner, ownerUID;
+        private TextView name, description, roomUID, roomOwner, ownerUID, gameTextView;
         public View view;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
             name = itemView.findViewById(R.id.myRoomName);
+            gameTextView = itemView.findViewById(R.id.game);
             //description = itemView.findViewById(R.id.roomDesc);
             roomUID = itemView.findViewById(R.id.myRoomUID);
             //roomOwner = itemView.findViewById(R.id.roomOwner);
@@ -198,17 +200,37 @@ public class MyRoomsListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Log.d("Card clicked", "yes");
-                    /*RoomsFragmentDirections.ActionNavRoomsToRoomContent action;
+                    MyRoomsListFragmentDirections.ActionMyRoomsListFragmentToRoomContent action;
+                    //RoomsFragmentDirections.ActionNavRoomsToRoomContent action;
                     String stringRoomUID = roomUID.getText().toString();
-                    String stringRoomOwner = ownerUID.getText().toString();
-                    action = RoomsFragmentDirections.actionNavRoomsToRoomContent(stringRoomUID, gameName, stringRoomOwner);
-                    NavHostFragment.findNavController(MyRoomsListFragment.this)
-                            .navigate((NavDirections) action);*/
+                    String game = gameTextView.getText().toString();
+                    Fragment fragment = new RoomContent();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("UID",stringRoomUID);
+                    Log.d("bundle",game);
+                    bundle.putString("game",game);
+                    bundle.putString("owner", userUID);
+                    fragment.setArguments(bundle);
+                    getParentFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.MyRoomsActivityLayout,fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .replace(binding.MyRoomsView.getId(),fragment)
+                            .addToBackStack(null)
+                            .commit();
+                    //String stringRoomOwner = ownerUID.getText().toString();
+                    //action = MyRoomsListFragmentDirections.actionMyRoomsListFragmentToRoomContent(stringRoomUID, gameName, "DGGC7N78yESopoiqWdd8U9Ld8Zz1");
+                    //Navigation.findNavController(v).navigate(action);
+                    //NavHostFragment.findNavController(MyRoomsListFragment.this)
+                            //.navigate((NavDirections) action);
 
 
                 }
             });
         }
 
-    }
+    }*/
 }

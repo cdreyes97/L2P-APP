@@ -112,18 +112,26 @@
         android:name="com.example.l2p_app.MyRoomsActivity"
         android:label="activity_my_rooms"
         tools:layout="@layout/activity_my_rooms">
-        <!--<argument
-            android:name="game"
-            app:argType="string" />
-        <argument
-            android:name="roomUID"
-            app:argType="string" />-->
     </activity>
     <activity
         android:id="@+id/myRequests"
         android:name="com.example.l2p_app.MyRequests"
         android:label="activity_my_requests"
         tools:layout="@layout/activity_my_requests" />
+    <activity
+        android:id="@+id/roomDetail2"
+        android:name="com.example.l2p_app.RoomDetail"
+        android:label="fragment_room_content"
+        tools:layout="@layout/fragment_room_content" />
+    <fragment
+        android:id="@+id/myRoomsListFragment"
+        android:name="com.example.l2p_app.MyRoomsListFragment"
+        android:label="fragment_my_room_list"
+        tools:layout="@layout/fragment_my_room_list" >
+        <action
+            android:id="@+id/action_myRoomsListFragment_to_roomContent"
+            app:destination="@id/roomContent" />
+    </fragment>
 
 
 </navigation>
