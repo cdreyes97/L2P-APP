@@ -62,6 +62,7 @@ public class MyRequestsAdapter extends RecyclerView.Adapter<MyRequestsAdapter.My
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
 
     }

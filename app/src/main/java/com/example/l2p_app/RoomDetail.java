@@ -86,7 +86,7 @@ public class RoomDetail extends AppCompatActivity {
 
         membersListView.setAdapter(adapter);
 
-        db = FirebaseDatabase.getInstance().getReference("room_participants/" + room.getUID());
+        db = FirebaseDatabase.getInstance().getReference("room_participants/" + room.getUID() + "/participants");
 
         db.addValueEventListener(new ValueEventListener() {
             @Override

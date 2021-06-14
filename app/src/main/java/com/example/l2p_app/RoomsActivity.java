@@ -61,7 +61,7 @@ public class RoomsActivity extends AppCompatActivity {
         Log.d("Game recieved", game);
 
         rv = findViewById(R.id.roomsList);
-        db = FirebaseDatabase.getInstance().getReference("Rooms/Valorant");
+        db = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
 

@@ -76,8 +76,12 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
 
         MaterialCardView valorant = binding.overwatchCard;
         MaterialCardView overwatch = binding.valorantCard;
+        MaterialCardView lol = binding.lolCard;
+        MaterialCardView rl = binding.rlCard;
         valorant.setOnClickListener(this);
         overwatch.setOnClickListener(this);
+        lol.setOnClickListener(this);
+        rl.setOnClickListener(this);
 
         return binding.getRoot();
 
@@ -180,6 +184,24 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.overwatchCard:
                 game = "Overwatch";
+                /*
+                action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
+                NavHostFragment.findNavController(GameListFragment.this)
+                        .navigate((NavDirections) action);*/
+                intent.putExtra("game", game);
+                startActivity(intent);
+                break;
+            case R.id.lolCard:
+                game = "League of Legends";
+                /*
+                action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
+                NavHostFragment.findNavController(GameListFragment.this)
+                        .navigate((NavDirections) action);*/
+                intent.putExtra("game", game);
+                startActivity(intent);
+                break;
+            case R.id.rlCard:
+                game = "Rocket League";
                 /*
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
                 NavHostFragment.findNavController(GameListFragment.this)
