@@ -32,6 +32,7 @@ import com.example.l2p_app.databinding.GameListBinding;
 import com.example.l2p_app.databinding.NavHeaderMainBinding;
 import com.example.l2p_app.models.MySingleton;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -73,8 +74,8 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
 
         binding = GameListBinding.inflate(inflater, container, false);
 
-        ImageView valorant = binding.imageView2;
-        ImageView overwatch = binding.imageView;
+        MaterialCardView valorant = binding.overwatchCard;
+        MaterialCardView overwatch = binding.valorantCard;
         valorant.setOnClickListener(this);
         overwatch.setOnClickListener(this);
 
@@ -167,7 +168,7 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
         GameListFragmentDirections.ActionNavHomeToNavRooms action;
         Intent intent = new Intent(getActivity(), RoomsActivity.class);
         switch (view.getId()){
-            case R.id.imageView:
+            case R.id.valorantCard:
                 game = "Valorant";
                 /*
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
@@ -177,7 +178,7 @@ public class GameListFragment extends Fragment implements View.OnClickListener {
                 intent.putExtra("game", game);
                 startActivity(intent);
                 break;
-            case R.id.imageView2:
+            case R.id.overwatchCard:
                 game = "Overwatch";
                 /*
                 action = GameListFragmentDirections.actionNavHomeToNavRooms(game);
