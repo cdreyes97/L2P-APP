@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.l2p_app.adapters.MyRoomsAdapter;
+//import com.example.l2p_app.adapters.MyRoomsAdapter;
 import com.example.l2p_app.adapters.RoomAdapter;
 import com.example.l2p_app.databinding.ActivityMainBinding;
 import com.example.l2p_app.databinding.ActivityMyRoomsBinding;
@@ -32,7 +32,7 @@ public class MyRoomsActivity extends AppCompatActivity {
     private DatabaseReference db;
     private ArrayList<Room> rooms;
     private String game;
-    private MyRoomsAdapter roomAdapter;
+    //private MyRoomsAdapter roomAdapter;
     private TextView[] dots;
     private int[] layouts;
     private ActivityMyRoomsBinding binding;
@@ -49,8 +49,8 @@ public class MyRoomsActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
 
         rooms = new ArrayList<>();
-        roomAdapter = new MyRoomsAdapter(this);
-        binding.pager.setAdapter(roomAdapter);
+        //roomAdapter = new MyRoomsAdapter(this);
+        //binding.pager.setAdapter(roomAdapter);
 
         new TabLayoutMediator(binding.tabLayout, binding.pager,
                 (tab, position) -> tab.setText(titles[position])).attach();

@@ -113,6 +113,8 @@ public class RoomDetail extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("game", room.getGame());
                 bundle.putString("roomUID", room.getUID());
+                bundle.putString("roomOwnerName", room.getOwnerName());
+                bundle.putString("roomOwnerUID", room.getOwnerUID());
                 SendRequest fragment = new SendRequest();
                 fragment.setArguments(bundle);
                 fragment.show(getSupportFragmentManager(), "Solicitud");

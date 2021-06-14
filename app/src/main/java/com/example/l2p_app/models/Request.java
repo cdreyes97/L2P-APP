@@ -12,8 +12,6 @@ public class Request {
     private String userUID;
     private String message;
     private String RoomUID;
-    private String roomGame;
-    private String roomOwner;
     private Status Status;
 
     public Request() {

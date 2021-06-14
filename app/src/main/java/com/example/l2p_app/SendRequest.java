@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.l2p_app.databinding.FragmentSendRequestBinding;
+import com.example.l2p_app.models.MyRequest;
 import com.example.l2p_app.models.Request;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
@@ -29,7 +30,7 @@ public class SendRequest extends DialogFragment {
     private Button sendRequestBtn, cancelBtn;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference db;
-    private String game, roomUID;
+    private String game, roomUID, roomOwner, roomOwnerUID;
 
 
     public SendRequest() {
@@ -52,6 +53,7 @@ public class SendRequest extends DialogFragment {
 
         game = SendRequestArgs.fromBundle(getArguments()).getGame();
         roomUID = SendRequestArgs.fromBundle(getArguments()).getRoomUID();
+
         cancelBtn = binding.cancelBtn;
 
         msgRequest = binding.msgRequest;
@@ -83,9 +85,11 @@ public class SendRequest extends DialogFragment {
                 String requestUID = requestPerRoom.getKey();
                 requestPerRoom.setValue(request);
 
+                MyRequest myRequest = new MyRequest(stringMsgRequest, roomUID, game, MyRequest.Status.PENDIENTE);
+
                 db = FirebaseDatabase.getInstance().getReference("request_per_users/" + userUID);
                 DatabaseReference requestPerUsers = db.child(requestUID);
-                requestPerUsers.setValue(request);
+                requestPerUsers.setValue(myRequest);
 
                 getDialog().dismiss();
 
