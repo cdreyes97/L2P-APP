@@ -152,6 +152,10 @@ public class EditProfile extends Fragment {
                 User user = new User(email,name);
                 userReference.setValue(user);
 
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(name).build();
+                FirebaseUser userInstance = FirebaseAuth.getInstance().getCurrentUser();
+                userInstance.updateProfile(profileUpdates);
 
                 ((MainActivity)getActivity()).TEST(name,imagePath);
                 StorageReference imageReference = storageReference.child(firebaseAuth.getUid()).child("Images").child("Profile Pic");  //User id/Images/Profile Pic.jpg
