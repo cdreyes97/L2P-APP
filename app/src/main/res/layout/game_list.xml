@@ -14,15 +14,6 @@
         android:padding="16dp"
         android:gravity="top">
 
-<!--        <TextView
-            android:id="@+id/textview_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:text="@string/select_view_title" />-->
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/valorantCard"
             android:layout_width="match_parent"

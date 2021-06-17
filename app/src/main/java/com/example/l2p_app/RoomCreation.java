@@ -16,18 +16,21 @@ import android.widget.Spinner;
 
 import com.example.l2p_app.models.Room;
 import com.example.l2p_app.models.User;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 
 public class RoomCreation extends Fragment {
 
     private View roomCreationView;
-    private EditText nameInput = null;
-    private EditText descriptionInput = null;
+    private TextInputLayout nameInput = null;
+    private TextInputLayout descriptionInput = null;
     private Spinner  gameInput = null;
-    private EditText playersInput = null;
+    private TextInputLayout playersInput = null;
     private DatabaseReference db;
     private FirebaseAuth firebaseAuth;
 
@@ -68,12 +71,15 @@ public class RoomCreation extends Fragment {
 
                 firebaseAuth = FirebaseAuth.getInstance();
 
-                String name = nameInput.getText().toString();
+                String[] games = new String[] {"Valorant", "Overwatch", "League of Legends", "Rocket League"};
+                String name = nameInput.getEditText().getText().toString();
                 String game = gameInput.getSelectedItem().toString();
-                String description = descriptionInput.getText().toString();
+//                String description = descriptionInput.getText().toString();
+                String description = descriptionInput.getEditText().getText().toString();
                 String ownerUID = firebaseAuth.getCurrentUser().getUid();
                 String ownerName = firebaseAuth.getCurrentUser().getDisplayName();
-                Integer numPlayers = Integer.parseInt(playersInput.getText().toString());
+//                Integer numPlayers = Integer.parseInt(playersInput.getText().toString());
+                Integer numPlayers = Integer.parseInt(playersInput.getEditText().getText().toString());
 
                 db = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
 

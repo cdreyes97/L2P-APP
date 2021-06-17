@@ -1,95 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:id="@+id/roomCreation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RoomCreation">
+    tools:context=".RoomCreation"
+    android:padding="16dp">
 
 
-    <TextView
+    <!--<TextView
         android:id="@+id/form_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/form_title"
-        android:textSize="10pt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:textSize="10pt" />-->
 
-    <EditText
+    <!--<EditText
         android:id="@+id/form_name"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:ems="10"
         android:inputType="textPersonName"
-        android:hint="@string/form_name"
-        app:layout_constraintEnd_toEndOf="@+id/form_title"
-        app:layout_constraintStart_toStartOf="@+id/form_title"
-        app:layout_constraintTop_toBottomOf="@+id/form_title"
-        android:autofillHints="" />
+        android:hint="@string/form_name"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/form_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de la sala"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--<com.google.android.material.textfield.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Juego"
+        android:entries="@array/gameList"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>-->
 
     <Spinner
         android:id="@+id/form_games"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:prompt="@string/game1"
-        android:entries="@array/gameList"
-        app:layout_constraintEnd_toEndOf="@+id/form_name"
-        app:layout_constraintStart_toStartOf="@+id/form_name"
-        app:layout_constraintTop_toBottomOf="@+id/form_name" />
+        android:entries="@array/gameList" />
 
-    <EditText
+    <!--<EditText
         android:id="@+id/form_players"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:hint="Número de participantes"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="@+id/form_games"
-        app:layout_constraintStart_toStartOf="@+id/form_games"
-        app:layout_constraintTop_toBottomOf="@+id/form_games" />
+        android:inputType="number" />-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/form_players"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Número de participantes"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 
-    <EditText
+    <!--<EditText
         android:id="@+id/form_description"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         android:lines="5"
-        android:hint="@string/form_description"
-        app:layout_constraintEnd_toEndOf="@+id/form_players"
-        app:layout_constraintStart_toStartOf="@+id/form_players"
-        app:layout_constraintTop_toBottomOf="@+id/form_players" />
+        android:hint="@string/form_description" />-->
 
-    <Button
-        android:id="@+id/form_button"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/form_description"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:text="@string/form_button"
-        app:layout_constraintEnd_toEndOf="@+id/form_description"
-        app:layout_constraintStart_toStartOf="@+id/form_description"
-        app:layout_constraintTop_toBottomOf="@+id/form_description" />
+        android:layout_marginTop="16dp"
+        android:hint="Descripción de la sala"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <Button
-        android:id="@+id/form_button_cancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:backgroundTint="#F44336"
-        android:text="Cancelar"
-        app:layout_constraintEnd_toEndOf="@+id/form_button"
-        app:layout_constraintStart_toStartOf="@+id/form_button"
-        app:layout_constraintTop_toBottomOf="@+id/form_button" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/form_button_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="?attr/borderlessButtonStyle"
+            android:text="Cancelar" />
+
+        <Button
+            android:id="@+id/form_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/form_button" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</LinearLayout>
