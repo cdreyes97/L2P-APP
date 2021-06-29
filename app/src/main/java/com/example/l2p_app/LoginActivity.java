@@ -79,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
 
@@ -94,9 +95,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "Ingreso correcto", Toast.LENGTH_SHORT).show();
+                    checkIfEmailVerified();
+                    /*Toast.makeText(LoginActivity.this, "Ingreso correcto", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    finish();*/
                     //checkEmailVerification();
                 }else{
                     Toast.makeText(LoginActivity.this, "Ingreso Fallido", Toast.LENGTH_SHORT).show();
@@ -107,19 +109,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    /*private void checkEmailVerification(){
-        FirebaseUser firebaseUser = firebaseAuth.getInstance().getCurrentUser();
-        Boolean emailflag = firebaseUser.isEmailVerified();
+    private void checkIfEmailVerified()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-        finish();
+        if (user.isEmailVerified())
+        {
+            Toast.makeText(LoginActivity.this, "Ingreso correcto", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+        else
+        {
+            // email is not verified, so just prompt the message to the user and restart this activity.
+            // NOTE: don't forget to log out the user.
+            Toast.makeText(this, "Por favor verifique su email", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
 
-//        if(emailflag){
-//            finish();
-//            startActivity(new Intent(MainActivity.this, SecondActivity.class));
-//        }else{
-//            Toast.makeText(this, "Verify your email", Toast.LENGTH_SHORT).show();
-//            firebaseAuth.signOut();
-//        }
-    }*/
+            //restart this activity
+
+        }
+    }
+
 }

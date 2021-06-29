@@ -9,38 +9,20 @@
 
   <EditText
       android:id="@+id/name"
-      android:drawableTint="@color/colorPrimary"
-      android:drawableStart="@drawable/person"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:drawableStart="@drawable/person"
+      android:drawableTint="@color/colorPrimary"
       android:ems="10"
       android:hint="@string/register_email"
+      android:importantForAutofill="no"
       android:inputType="textEmailAddress"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.502"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.413"
-      android:drawableLeft="@drawable/person"
-      android:importantForAutofill="no" />
-
-  <EditText
-      android:id="@+id/password"
-      android:drawableStart="@drawable/lock"
-      android:drawableTint="@color/colorPrimary"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:ems="10"
-      android:hint="@string/login_password"
-      android:inputType="textWebPassword"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.502"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/name"
-      app:layout_constraintVertical_bias="0.075"
-      android:drawableLeft="@drawable/lock" />
+      app:layout_constraintVertical_bias="0.434" />
 
   <Button
       android:id="@+id/btnLogin"
@@ -52,15 +34,30 @@
       app:layout_constraintHorizontal_bias="0.496"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/password"
-      app:layout_constraintVertical_bias="0.126" />
+      app:layout_constraintVertical_bias="0.127" />
+
+  <EditText
+      android:id="@+id/password"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:drawableStart="@drawable/lock"
+      android:drawableTint="@color/colorPrimary"
+      android:ems="10"
+      android:hint="@string/login_password"
+      android:importantForAutofill="no"
+      android:inputType="textWebPassword"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.502"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/name"
+      app:layout_constraintVertical_bias="0.078" />
 
   <TextView
       android:id="@+id/register"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="70dp"
       android:layout_marginTop="8dp"
-      android:layout_marginRight="8dp"
       android:layout_marginBottom="8dp"
       android:text="@string/register_login"
       android:textSize="20sp"
@@ -90,17 +87,14 @@
   </ProgressBar>
 
   <ImageView
-      android:id="@+id/appLogo"
-      android:layout_width="223dp"
-      android:layout_height="153dp"
-      android:src="@drawable/looking2play_logo"
+      android:id="@+id/imageView5"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
       app:layout_constraintBottom_toTopOf="@+id/name"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.53"
-      app:srcCompat="@drawable/looking2play_logo"
-      tools:srcCompat="@drawable/looking2play_logo" />
+      tools:srcCompat="@tools:sample/avatars" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

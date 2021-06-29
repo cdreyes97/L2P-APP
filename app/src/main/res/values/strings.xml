@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">Looking 2 Play</string>
     <string name="action_settings">Ajustes</string>
-    <!-- Strings used for login activity -->
+    <!-- Strings used for login and register activity -->
     <string name="login_password">Contraseña </string>
     <string name="login">Ingresar</string>
     <string name="enter_name">Nombre de usuario</string>
-    <!-- Strings used for login activity -->
-    <string name="register_login">Nuevo usuario? Registrate!</string>
+    <string name="register_login">Nuevo usuario? <font fgcolor='#01C6DB'>Registrate!</font></string>
     <string name="register_email">Correo</string>
     <string name="register_button">Registrarse</string>
+    <string name="login_register">Ya registrado? <font fgcolor='#01C6DB'>Inicia Sesión!</font></string>
+
+
     <!-- Strings used messagin/notification service -->
     <string name="msg_token_fmt" translatable="true">FCM registration Token: %s</string>
     <string name="msg_subscribed">Subscribed to weather topic</string>
