@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     private NavHeaderMainBinding navHeaderMainBinding;
-
+    private FirebaseUser user;
     private FirebaseStorage firebaseStorage;
     private FirebaseDatabase firebaseDatabase;
 
@@ -67,14 +67,17 @@ public class MainActivity extends AppCompatActivity {
         //FirebaseMessaging.getInstance().subscribeToTopic("userABC");
 
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         firebaseStorage = FirebaseStorage.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         DatabaseReference db = firebaseDatabase.getReference("Users");
         final DatabaseReference userReference = db.child(firebaseAuth.getUid());
 
-
+        if(user== null){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        }
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         navHeaderMainBinding = NavHeaderMainBinding.inflate(getLayoutInflater());
         binding.navView.addHeaderView(navHeaderMainBinding.getRoot());

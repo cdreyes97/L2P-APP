@@ -115,6 +115,15 @@ public class RegistrationActivity extends AppCompatActivity {
                                     imagePath = Uri.parse("android.resource://"+"com.example.l2p_app"+"/drawable/blank_profile_picture");
                                 }
                                 sendUserData();
+                                if (user != null) {
+                                    // User is signed in
+                                    // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
+                                    // the user will receive another verification email.
+                                    sendVerificationEmail();
+                                } else {
+                                    // User is signed out
+                                    FirebaseAuth.getInstance().signOut();
+                                }
                                 //firebaseAuth.signOut();
                                 Toast.makeText(RegistrationActivity.this, "Registrado exitosamente!", Toast.LENGTH_SHORT).show();
                                 finish();
@@ -129,22 +138,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        mAuthListener = new FirebaseAuth.AuthStateListener(){
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
-                    // the user will receive another verification email.
-                    sendVerificationEmail();
-                } else {
-                    // User is signed out
-
-                }
-                // ...
-            }
-        };
 
         userLogin.setOnClickListener(new View.OnClickListener() {
             @Override

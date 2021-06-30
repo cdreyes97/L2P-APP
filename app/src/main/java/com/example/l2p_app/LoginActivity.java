@@ -53,11 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
-        /*if(sp.getBoolean("logged",false)){
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }*/
 
+
+        //Log.d("A",user.toString());
         if(user != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -124,11 +122,39 @@ public class LoginActivity extends AppCompatActivity {
             // email is not verified, so just prompt the message to the user and restart this activity.
             // NOTE: don't forget to log out the user.
             Toast.makeText(this, "Por favor verifique su email", Toast.LENGTH_SHORT).show();
+            pgsBar.setVisibility(View.INVISIBLE);
+            sendVerificationEmail();
             FirebaseAuth.getInstance().signOut();
 
             //restart this activity
 
         }
+    }
+
+    private void sendVerificationEmail()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // email sent
+                        }
+                        else
+                        {
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+
+                        }
+                    }
+                });
     }
 
 }
