@@ -66,7 +66,7 @@ public class RoomDetail extends AppCompatActivity {
             joinRoomBtn.setVisibility(View.GONE);
             editRoomBtn.setVisibility(View.VISIBLE);
             viewRequestBtn.setVisibility(View.VISIBLE);
-            deleteRoomBtn.setVisibility(View.VISIBLE);
+            deleteRoomBtn.setVisibility(View.GONE);
         } else {
             joinRoomBtn.setVisibility(View.VISIBLE);
             editRoomBtn.setVisibility(View.GONE);
