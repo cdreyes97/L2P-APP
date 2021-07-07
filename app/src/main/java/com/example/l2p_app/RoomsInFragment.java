@@ -92,11 +92,12 @@ public class RoomsInFragment extends Fragment {
                         roomReference.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Room roomObject = snapshot.getValue(Room.class);
-                                roomObject.setUID(roomUID);
-                                rooms.add(roomObject);
-                                adapter.notifyDataSetChanged();
-
+                                if (snapshot.exists()){
+                                    Room roomObject = snapshot.getValue(Room.class);
+                                    roomObject.setUID(roomUID);
+                                    rooms.add(roomObject);
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
 
                             @Override
