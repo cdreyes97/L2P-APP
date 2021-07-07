@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -86,7 +87,7 @@ public class RoomCreation extends Fragment {
                 DatabaseReference newRoom = db.push();
                 newRoom.setValue(new Room(name, ownerUID, ownerName, game, description, numPlayers,1));
                 String roomKey = newRoom.getKey();
-
+                FirebaseMessaging.getInstance().subscribeToTopic(roomKey); //subscribirse a room unico
                 //User user = new User("a@a.com","Admin");
 
                 db = FirebaseDatabase.getInstance().getReference("room_participants");

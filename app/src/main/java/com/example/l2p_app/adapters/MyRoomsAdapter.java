@@ -1,10 +1,13 @@
 package com.example.l2p_app.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,19 +16,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.l2p_app.R;
 import com.example.l2p_app.RoomDetail;
 import com.example.l2p_app.models.Room;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHolder>{
 
     Context context;
-
     ArrayList<Room> rooms;
 
     public MyRoomsAdapter(Context context, ArrayList<Room> rooms) {
         this.context = context;
         this.rooms = rooms;
     }
+
 
     @NonNull
     @Override
@@ -44,6 +50,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         //holder.roomOwner.setText(room.getOwnerName());
         holder.ownerUID.setText(room.getOwnerUID());
 
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +61,36 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             }
         });
 
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new MaterialAlertDialogBuilder(v.getContext())
+                        .setTitle("Desea eliminar esta sala?")
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                rooms.remove(position);
+                                deleteRoom(room.getUID(), room.getGame(),room.getOwnerUID(), position);
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+                }
+        });
+
+        holder.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -67,6 +104,8 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
         private TextView name, roomUID, ownerUID;
         public View view;
+        private Button deleteBtn;
+        private Button editBtn;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,7 +115,24 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             roomUID = itemView.findViewById(R.id.myRoomUID);
             //roomOwner = itemView.findViewById(R.id.roomOwner);
             ownerUID = itemView.findViewById(R.id.myRoomOwnerUID);
+            deleteBtn = itemView.findViewById(R.id.MRDeleteBtn);
+            editBtn = itemView.findViewById(R.id.MREditBtn);
+
 
         }
     }
+
+
+    void deleteRoom(String roomUID, String game, String ownerUID, int position){
+        DatabaseReference roomReference = FirebaseDatabase.getInstance().getReference("Rooms/"+game+"/" + roomUID);
+        DatabaseReference roomParticipants  = FirebaseDatabase.getInstance().getReference("room_participants/"+ roomUID);
+        DatabaseReference myRoom  = FirebaseDatabase.getInstance().getReference("room_owner/"+ ownerUID + "/"+ game+ "/" + roomUID);
+        myRoom.removeValue();
+        roomReference.removeValue();
+        roomParticipants.removeValue();
+        notifyItemRemoved(position);
+
+    }
+
+
 }

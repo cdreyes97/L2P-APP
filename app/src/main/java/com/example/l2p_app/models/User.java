@@ -3,6 +3,7 @@ package com.example.l2p_app.models;
 public class User {
     public String email;
     public String name;
+    public String token;
 
     public User(){
 
@@ -28,4 +29,8 @@ public class User {
     public void setName(String userName) {
         this.name = userName;
     }
+
+    public String getToken(){return token;}
+
+    public void setToken(String token){this.token = token;}
 }

@@ -21,17 +21,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.l2p_app.databinding.ActivityRegistrationBinding;
 import com.example.l2p_app.models.User;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -44,11 +48,12 @@ public class RegistrationActivity extends AppCompatActivity {
     private Button regButton;
     private TextView userLogin;
     private ImageView userProfilePic;
-
+    private ActivityRegistrationBinding binding;
     private FirebaseAuth firebaseAuth;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private Snackbar mySnackbar;
 
     Uri imagePath;
     String email, name, password;
@@ -77,11 +82,14 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         setupUIViews();
 
+        binding = ActivityRegistrationBinding.inflate(getLayoutInflater());
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
 
         storageReference = firebaseStorage.getReference();
 
+        //mySnackbar = Snackbar.make(binding.getRoot(), "emailSended", 1000000);
 
         userProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,9 +133,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                     FirebaseAuth.getInstance().signOut();
                                 }
                                 //firebaseAuth.signOut();
-                                Toast.makeText(RegistrationActivity.this, "Registrado exitosamente!", Toast.LENGTH_SHORT).show();
-                                finish();
-                                startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+                                //finish();
+                                //startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));*/
                             }else{
                                 Toast.makeText(RegistrationActivity.this, "Registro fallido", Toast.LENGTH_SHORT).show();
                             }
@@ -179,6 +186,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void sendUserData(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
         DatabaseReference db = firebaseDatabase.getReference("Users");
         DatabaseReference newUser = db.child(firebaseAuth.getUid());
         StorageReference imageReference = storageReference.child(firebaseAuth.getUid()).child("Images").child("Profile Pic");
@@ -186,15 +194,36 @@ public class RegistrationActivity extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(RegistrationActivity.this, "Subida fallida!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegistrationActivity.this, "Subida fallida!", Toast.LENGTH_SHORT).show();
             }
         }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                Toast.makeText(RegistrationActivity.this, "Subida exitosa!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegistrationActivity.this, "Subida exitosa!", Toast.LENGTH_SHORT).show();
             }
         });
-        newUser.setValue(new User(email,name));
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("Main ACtivity", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("Main ACtivity", msg);
+                        User objectUser = new User(email,name);
+                        objectUser.setToken(token);
+                        newUser.setValue(objectUser);
+                        //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void sendVerificationEmail()
@@ -207,8 +236,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // email sent
-
-
+                            /*Snackbar.make(findViewById(R.id.RegistrationCoorditanorLayout),
+                                    "Se le ha enviado un correo de verificación a " + user.getEmail()
+                                    ,30000).show();*/
+                            Toast.makeText(RegistrationActivity.this, "Se le ha enviado un correo de verificación a " + user.getEmail(), Toast.LENGTH_LONG).show();
                             // after email is sent just logout the user and finish this activity
                             FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));

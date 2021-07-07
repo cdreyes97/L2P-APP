@@ -100,18 +100,23 @@ public class MyRoomsListFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull  DataSnapshot snapshot) {
                                 Room roomObject = snapshot.getValue(Room.class);
-                                roomObject.setUID(roomUID);
-                                rooms.add(roomObject);
-                                //Room room = new Room();
-                                //room = roomReference.get().getResult().getValue(Room.class);
-                                //room.setGame(game);
-                                Log.d("OBTENER SALA", roomObject.getName());
-                                //Log.d("OBTENER SALA GAME", game);
-                                //room.setUID(dsRoom.getKey());
-                                //rooms.add(room);
-                                //Log.d("UID", room.getUID());
-                                adapter.notifyDataSetChanged();
+                                if(roomObject != null){
+                                    roomObject.setUID(roomUID);
+                                    rooms.add(roomObject);
+                                    //Room room = new Room();
+                                    //room = roomReference.get().getResult().getValue(Room.class);
+                                    //room.setGame(game);
+                                    Log.d("OBTENER SALA", roomObject.getName());
+                                    //Log.d("OBTENER SALA GAME", game);
+                                    //room.setUID(dsRoom.getKey());
+                                    //rooms.add(room);
+                                    //Log.d("UID", room.getUID());
+                                    adapter.notifyDataSetChanged();
 
+                                }
+                                else{
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
 
                             @Override
