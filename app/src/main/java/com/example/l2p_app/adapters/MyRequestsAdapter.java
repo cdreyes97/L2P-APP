@@ -52,10 +52,13 @@ public class MyRequestsAdapter extends RecyclerView.Adapter<MyRequestsAdapter.My
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Room room = snapshot.getValue(Room.class);
+                if (snapshot.exists()){
+                    Room room = snapshot.getValue(Room.class);
 
-                holder.roomOwner.setText(room.getOwnerName());
-                holder.name.setText(room.getName());
+                    holder.roomOwner.setText(room.getOwnerName());
+                    holder.name.setText(room.getName());
+                }
+
             }
 
             @Override

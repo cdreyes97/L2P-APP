@@ -114,9 +114,6 @@ public class MyRoomsListFragment extends Fragment {
                                     adapter.notifyDataSetChanged();
 
                                 }
-                                else{
-                                    adapter.notifyDataSetChanged();
-                                }
                             }
 
                             @Override
