@@ -89,7 +89,7 @@ public class L2PFirebaseMessagingService extends FirebaseMessagingService {
 
         //Set notification color to match your app color template
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            notificationBuilder.setColor(getResources().getColor(R.color.colorPrimaryDark));
+            notificationBuilder.setColor(getResources().getColor(R.color.design_default_color_primary));
         }
         notificationManager.notify(notificationID, notificationBuilder.build());
     }

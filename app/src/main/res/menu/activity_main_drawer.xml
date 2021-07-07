@@ -4,23 +4,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_drawer">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_action_home"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_my_rooms"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_action_rooms"
             app:showAsAction="always"
             android:title="@string/menu_rooms" />
         <item
             android:id="@+id/myRequests"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_action_requests"
             android:title="@string/menu_requests" />
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_action_logout"
             android:title="@string/menu_logout" />
     </group>
 </menu>

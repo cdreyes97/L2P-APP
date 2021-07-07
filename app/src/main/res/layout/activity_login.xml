@@ -9,7 +9,7 @@
 
   <EditText
       android:id="@+id/name"
-      android:drawableTint="@color/colorPrimary"
+      android:drawableTint="@color/design_default_color_primary"
       android:drawableStart="@drawable/person"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
   <EditText
       android:id="@+id/password"
       android:drawableStart="@drawable/lock"
-      android:drawableTint="@color/colorPrimary"
+      android:drawableTint="@color/design_default_color_primary"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:ems="10"
