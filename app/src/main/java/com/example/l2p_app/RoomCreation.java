@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.l2p_app.models.Room;
 import com.example.l2p_app.models.User;
@@ -35,6 +36,9 @@ public class RoomCreation extends Fragment {
     private DatabaseReference db;
     private FirebaseAuth firebaseAuth;
 
+    private String name, game, description, ownerUID, ownerName;
+    private Integer numPlayers;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class RoomCreation extends Fragment {
         gameInput =  roomCreationView.findViewById(R.id.form_games);
         playersInput = roomCreationView.findViewById(R.id.form_players);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
 
 
         return  roomCreationView;
@@ -64,49 +70,44 @@ public class RoomCreation extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
          roomCreationView.findViewById(R.id.form_button).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
+                if (validateFields()) {
 
 
-                firebaseAuth = FirebaseAuth.getInstance();
-
-                String[] games = new String[] {"Valorant", "Overwatch", "League of Legends", "Rocket League"};
-                String name = nameInput.getEditText().getText().toString();
-                String game = gameInput.getSelectedItem().toString();
-//                String description = descriptionInput.getText().toString();
-                String description = descriptionInput.getEditText().getText().toString();
-                String ownerUID = firebaseAuth.getCurrentUser().getUid();
-                String ownerName = firebaseAuth.getCurrentUser().getDisplayName();
-//                Integer numPlayers = Integer.parseInt(playersInput.getText().toString());
-                Integer numPlayers = Integer.parseInt(playersInput.getEditText().getText().toString());
-
-                db = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
-
-                DatabaseReference newRoom = db.push();
-                newRoom.setValue(new Room(name, ownerUID, ownerName, game, description, numPlayers,1));
-                String roomKey = newRoom.getKey();
-                FirebaseMessaging.getInstance().subscribeToTopic(roomKey); //subscribirse a room unico
-                //User user = new User("a@a.com","Admin");
-
-                db = FirebaseDatabase.getInstance().getReference("room_participants");
-                DatabaseReference newRoomParticipants = db.child(roomKey);
-                newRoomParticipants.child("game").setValue(game);
-                newRoomParticipants.child("roomName").setValue(name);
-                newRoomParticipants.child("participants").child(ownerUID).setValue(ownerName);
+                    String[] games = new String[] {"Valorant", "Overwatch", "League of Legends", "Rocket League"};
 
 
-                db = FirebaseDatabase.getInstance().getReference("room_owner");
-                DatabaseReference newRoomOwner = db.child(ownerUID).child(game).child(roomKey);
-                newRoomOwner.setValue(name);
 
-                //Log.d("a",nameInput.getText().toString());
-                //Log.d("a",gameInput.getSelectedItem().toString());
-                Log.d("Creating Room", roomKey);
+                    db = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
 
-                NavHostFragment.findNavController(RoomCreation.this).popBackStack();
+                    DatabaseReference newRoom = db.push();
+                    newRoom.setValue(new Room(name, ownerUID, ownerName, game, description, numPlayers,1));
+                    String roomKey = newRoom.getKey();
+                    FirebaseMessaging.getInstance().subscribeToTopic(roomKey); //subscribirse a room unico
+                    //User user = new User("a@a.com","Admin");
 
+                    db = FirebaseDatabase.getInstance().getReference("room_participants");
+                    DatabaseReference newRoomParticipants = db.child(roomKey);
+                    newRoomParticipants.child("game").setValue(game);
+                    newRoomParticipants.child("roomName").setValue(name);
+                    newRoomParticipants.child("participants").child(ownerUID).setValue(ownerName);
+
+
+                    db = FirebaseDatabase.getInstance().getReference("room_owner");
+                    DatabaseReference newRoomOwner = db.child(ownerUID).child(game).child(roomKey);
+                    newRoomOwner.setValue(name);
+
+                    //Log.d("a",nameInput.getText().toString());
+                    //Log.d("a",gameInput.getSelectedItem().toString());
+                    Log.d("Creating Room", roomKey);
+
+                    NavHostFragment.findNavController(RoomCreation.this).popBackStack();
+
+                }
             }
         });
         roomCreationView.findViewById(R.id.form_button_cancel).setOnClickListener(new View.OnClickListener() {
@@ -116,6 +117,25 @@ public class RoomCreation extends Fragment {
             }
         });
 
+    }
+
+    public boolean validateFields(){
+        name = nameInput.getEditText().getText().toString();
+        game = gameInput.getSelectedItem().toString();
+        description = descriptionInput.getEditText().getText().toString();
+        ownerUID = firebaseAuth.getCurrentUser().getUid();
+        ownerName = firebaseAuth.getCurrentUser().getDisplayName();
+
+
+        if (name.isEmpty() || game.isEmpty() || description.isEmpty() || ownerUID.isEmpty() ||
+                ownerName.isEmpty() || playersInput.getEditText().getText().toString().isEmpty()) {
+            Toast.makeText(getActivity(), "Por favor ingrese todo los campos", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        numPlayers = Integer.parseInt(playersInput.getEditText().getText().toString());
+
+        return true;
     }
 
 
