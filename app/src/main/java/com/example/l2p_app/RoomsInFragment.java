@@ -81,6 +81,7 @@ public class RoomsInFragment extends Fragment {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                rooms.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String roomUID = ds.getKey();
                     String gameName = ds.child("game").getValue().toString();

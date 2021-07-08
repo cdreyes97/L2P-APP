@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.l2p_app.R;
 import com.example.l2p_app.RoomDetail;
 import com.example.l2p_app.models.Room;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -50,6 +51,9 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         //holder.roomOwner.setText(room.getOwnerName());
         holder.ownerUID.setText(room.getOwnerUID());
 
+        MyRoomsAdapter adapter = this;
+
+
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +80,6 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                rooms.remove(position);
                                 deleteRoom(room.getUID(), room.getGame(),room.getOwnerUID(), position);
                                 dialog.dismiss();
                             }
@@ -124,13 +127,24 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
 
     void deleteRoom(String roomUID, String game, String ownerUID, int position){
+        rooms.remove(position);
         DatabaseReference roomReference = FirebaseDatabase.getInstance().getReference("Rooms/"+game+"/" + roomUID);
         DatabaseReference roomParticipants  = FirebaseDatabase.getInstance().getReference("room_participants/"+ roomUID);
         DatabaseReference myRoom  = FirebaseDatabase.getInstance().getReference("room_owner/"+ ownerUID + "/"+ game+ "/" + roomUID);
-        myRoom.removeValue();
+        myRoom.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                roomParticipants.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        notifyItemRemoved(position);
+                    }
+                });
+            }
+        });
         roomReference.removeValue();
-        roomParticipants.removeValue();
-        notifyItemRemoved(position);
+
+
 
     }
 

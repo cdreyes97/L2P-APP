@@ -87,7 +87,7 @@ public class MyRoomsListFragment extends Fragment {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                rooms.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     for (DataSnapshot dsRoom : ds.getChildren()) {
                         String roomName = dsRoom.getValue().toString();
@@ -112,7 +112,6 @@ public class MyRoomsListFragment extends Fragment {
                                     //rooms.add(room);
                                     //Log.d("UID", room.getUID());
                                     adapter.notifyDataSetChanged();
-
                                 }
                             }
 
