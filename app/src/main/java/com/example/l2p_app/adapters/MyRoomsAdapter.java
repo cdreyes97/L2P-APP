@@ -3,6 +3,7 @@ package com.example.l2p_app.adapters;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.l2p_app.EditRoom;
 import com.example.l2p_app.R;
 import com.example.l2p_app.RoomDetail;
 import com.example.l2p_app.models.Room;
@@ -91,6 +95,13 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentActivity activity = (FragmentActivity)(context);
+                FragmentManager fm = activity.getSupportFragmentManager();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("room", room);
+                EditRoom fragment = new EditRoom();
+                fragment.setArguments(bundle);
+                fragment.show(fm, "Edit Room");
 
             }
         });

@@ -80,7 +80,23 @@
         android:id="@+id/editRoom"
         android:name="com.example.l2p_app.EditRoom"
         android:label="fragment_edit_room"
-        tools:layout="@layout/fragment_edit_room" />
+        tools:layout="@layout/fragment_edit_room" >
+        <argument
+            android:name="game"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="numPlayers"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="roomUID"
+            app:argType="string" />
+    </fragment>
     <activity
         android:id="@+id/roomsActivity"
         android:name="com.example.l2p_app.RoomsActivity"

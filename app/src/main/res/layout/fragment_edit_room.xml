@@ -1,83 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/roomCreation"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditRoom">
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    tools:context=".EditRoom"
+    >
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editRoomName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre de la sala"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <TextView
-        android:id="@+id/form_title"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editRoomPlayers"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/form_title"
-        android:textSize="10pt"
+        android:hint="Número de participantes"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editRoomDesc"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="Ingrese un mensaje">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/editRoomLinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right">
+
+        <Button
+            android:id="@+id/cancelEditRoomBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            style="?attr/borderlessButtonStyle"/>
+
+        <Button
+            android:id="@+id/editRoomBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Editar" />
+
+    </LinearLayout>
+
+    <!--<TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Ingrese un mensaje en su solicitud"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/form_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="@string/form_name"
-        app:layout_constraintEnd_toEndOf="@+id/form_title"
-        app:layout_constraintStart_toStartOf="@+id/form_title"
-        app:layout_constraintTop_toBottomOf="@+id/form_title"
-        android:autofillHints="" />
-
-    <Spinner
-        android:id="@+id/form_games"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:prompt="@string/game1"
-        android:entries="@array/gameList"
-        app:layout_constraintEnd_toEndOf="@+id/form_name"
-        app:layout_constraintStart_toStartOf="@+id/form_name"
-        app:layout_constraintTop_toBottomOf="@+id/form_name" />
-
-    <Spinner
-        android:id="@+id/form_players"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:prompt="@string/game1"
-        android:entries="@array/gameList"
-        app:layout_constraintEnd_toEndOf="@+id/form_games"
-        app:layout_constraintStart_toStartOf="@+id/form_games"
-        app:layout_constraintTop_toBottomOf="@+id/form_games" />
-
-    <EditText
-        android:id="@+id/form_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:autofillHints=""
+        android:id="@+id/msgRequest"
+        android:layout_width="302dp"
+        android:layout_height="313dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:lines="5"
-        android:hint="@string/form_description"
-        app:layout_constraintEnd_toEndOf="@+id/form_players"
-        app:layout_constraintStart_toStartOf="@+id/form_players"
-        app:layout_constraintTop_toBottomOf="@+id/form_players" />
+        app:layout_constraintBottom_toTopOf="@+id/sendRequest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.177" />-->
 
-    <Button
-        android:id="@+id/form_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:text="Editar"
-        app:layout_constraintEnd_toEndOf="@+id/form_description"
-        app:layout_constraintStart_toStartOf="@+id/form_description"
-        app:layout_constraintTop_toBottomOf="@+id/form_description" />
+    <!-- <Button
+         android:id="@+id/sendRequest"
+         android:layout_width="0dp"
+         android:layout_height="52dp"
+         android:layout_marginBottom="88dp"
+         android:text="Enviar Solicitud"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="@+id/msgRequest"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="@+id/msgRequest" />
+
+     <Button
+         android:id="@+id/cancelBtn"
+         android:layout_width="0dp"
+         android:layout_height="52dp"
+         android:layout_marginBottom="36dp"
+         android:text="Cancelar"
+         app:backgroundTint="#F44336"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="@+id/msgRequest"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="@+id/msgRequest" />-->
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</LinearLayout>
