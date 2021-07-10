@@ -70,8 +70,8 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
     public void deleteRequests(Request request, String game, int position){
         requests.remove(position);
 
-        DatabaseReference removePerRoom = FirebaseDatabase.getInstance().getReference("request_per_room/" + game + "/" + request.getRequestUID());
-        DatabaseReference removePerUser = FirebaseDatabase.getInstance().getReference("request_per_user/" + request.getUserUID() + "/" + request.getRequestUID());
+        DatabaseReference removePerRoom = FirebaseDatabase.getInstance().getReference("request_per_room/" + game + "/" + request.getRoomUID() + "/" + request.getRequestUID());
+        DatabaseReference removePerUser = FirebaseDatabase.getInstance().getReference("request_per_users/" + request.getUserUID() + "/" + request.getRequestUID());
         removePerRoom.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
