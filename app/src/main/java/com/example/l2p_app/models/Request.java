@@ -13,6 +13,7 @@ public class Request {
     private String message;
     private String RoomUID;
     private Status Status;
+    private String requestUID;
 
     public Request() {
     }
@@ -25,7 +26,13 @@ public class Request {
         Status = status;
     }
 
+    public String getRequestUID() {
+        return requestUID;
+    }
 
+    public void setRequestUID(String requestUID) {
+        this.requestUID = requestUID;
+    }
 
     public String getUserName() {
         return userName;

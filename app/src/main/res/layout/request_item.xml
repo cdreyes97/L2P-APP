@@ -19,14 +19,6 @@
 
 
             <TextView
-                android:id="@+id/roomName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:text="Hide in the Bush"
-                />
-
-            <TextView
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,11 +43,13 @@
             android:orientation="horizontal"
             android:layout_gravity="right">
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/rejectBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rechazar"
                 style="?attr/borderlessButtonStyle" />
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/acceptBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
