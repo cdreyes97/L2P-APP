@@ -137,7 +137,6 @@ public class RoomDetail extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
