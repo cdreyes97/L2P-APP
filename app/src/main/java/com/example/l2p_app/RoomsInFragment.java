@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.l2p_app.adapters.MyRoomsAdapter;
+import com.example.l2p_app.adapters.MyRoomsParticipantAdapter;
 import com.example.l2p_app.databinding.FragmentRoomsInBinding;
 import com.example.l2p_app.models.Room;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -41,7 +41,7 @@ public class RoomsInFragment extends Fragment {
     private String gameName;
     private int tabNumber;
     private String userUID;
-    private MyRoomsAdapter adapter;
+    private MyRoomsParticipantAdapter adapter;
 
 
     public RoomsInFragment() {
@@ -68,13 +68,14 @@ public class RoomsInFragment extends Fragment {
 
         binding = FragmentRoomsInBinding.inflate(inflater, container, false);
 
+
         rooms = new ArrayList<>();
 
         rv = binding.RoomsInRv;
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new MyRoomsAdapter(getContext(), rooms);
+        adapter = new  MyRoomsParticipantAdapter(getContext(), rooms);
 
         rv.setAdapter(adapter);
 
@@ -121,6 +122,11 @@ public class RoomsInFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

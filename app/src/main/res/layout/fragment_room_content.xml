@@ -77,6 +77,11 @@
             android:layout_height="wrap_content"
             android:text="+ Quiero Unirme" />
 
+        <Button
+            android:id="@+id/leaveRoomBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="- Salir de la sala" />
 
 
         <LinearLayout

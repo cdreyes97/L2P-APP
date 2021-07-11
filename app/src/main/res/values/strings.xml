@@ -64,4 +64,9 @@
     <string name="form_button">Crear Sala</string>
     <string name="title_activity_room_creation">RoomCreation</string>
 
+
+    <string-array name="participantsOptions">
+        <item>Eliminar participante</item>
+    </string-array>
+
 </resources>

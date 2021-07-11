@@ -93,6 +93,11 @@ public class MyRoomsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        roomAdapter.notifyDataSetChanged();
+    }
     /*private void init() {
         // layouts of all welcome sliders
         // add few more layouts if you want

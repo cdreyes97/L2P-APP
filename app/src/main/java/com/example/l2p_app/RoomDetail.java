@@ -6,17 +6,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.l2p_app.adapters.MyRoomsAdapter;
+import com.example.l2p_app.adapters.ParticipantsAdapter;
 import com.example.l2p_app.models.Room;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,15 +38,22 @@ import java.util.ArrayList;
 public class RoomDetail extends AppCompatActivity {
 
     private Room room;
-    private DatabaseReference db;
+    private DatabaseReference db,participantRef;
     private TextView roomName, roomOwner, roomDescription;
     private ListView membersListView;
-    private Button joinRoomBtn, editRoomBtn, deleteRoomBtn, viewRequestBtn;
+    private Button joinRoomBtn, leaveRoomBtn, editRoomBtn, deleteRoomBtn, viewRequestBtn;
     private String gameName, roomUID, ownerUID;
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> members;
+    private ArrayList<String> members,membersUID;
     private FirebaseAuth firebaseAuth;
     private FragmentManager manager;
+    private boolean imInRoom = false;
+    private String userUID;
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +67,14 @@ public class RoomDetail extends AppCompatActivity {
 
         room = (Room) getIntent().getExtras().getSerializable("room");
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        db = FirebaseDatabase.getInstance().getReference("room_participants/" + room.getUID() + "/participants");
+
+        userUID = firebaseAuth.getCurrentUser().getUid();
+
+
+
         setTitle(room.getName());
 
         roomName = findViewById(R.id.roomName);
@@ -58,46 +82,46 @@ public class RoomDetail extends AppCompatActivity {
         roomDescription = findViewById(R.id.roomDescription);
         membersListView = findViewById(R.id.listOfMembers);
         joinRoomBtn = findViewById(R.id.joinRoomBtn);
+        leaveRoomBtn = findViewById(R.id.leaveRoomBtn);
         editRoomBtn = findViewById(R.id.editBtn);
         deleteRoomBtn = findViewById(R.id.deleteBtn);
         viewRequestBtn = findViewById(R.id.viewRequestBtn);
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        if (room.getOwnerUID().equals(firebaseAuth.getCurrentUser().getUid())) {
-            joinRoomBtn.setVisibility(View.GONE);
-            editRoomBtn.setVisibility(View.VISIBLE);
-            viewRequestBtn.setVisibility(View.VISIBLE);
-            deleteRoomBtn.setVisibility(View.GONE);
-        } else {
-            joinRoomBtn.setVisibility(View.VISIBLE);
-            editRoomBtn.setVisibility(View.GONE);
-            viewRequestBtn.setVisibility(View.GONE);
-            deleteRoomBtn.setVisibility(View.GONE);
-        }
-
-        Log.d("room name", room.getUID());
-        room.setUID(room.getUID());
-        roomName.setText(room.getName());
-        roomDescription.setText(room.getDescription());
-        roomOwner.setText(room.getOwnerName());
 
         members = new ArrayList<>();
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, members);
-
-        membersListView.setAdapter(adapter);
-
-        db = FirebaseDatabase.getInstance().getReference("room_participants/" + room.getUID() + "/participants");
+        membersUID = new ArrayList<>();
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                members.clear();
+                membersUID.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String member = ds.getValue().toString();
-                    Log.d("member", member);
+                    if(ds.getKey().equals(userUID)){
+                        imInRoom = true;
+                    }
                     members.add(member);
+                    membersUID.add(ds.getKey());
                     adapter.notifyDataSetChanged();
+                }
+                if (room.getOwnerUID().equals(userUID)) {
+                    leaveRoomBtn.setVisibility(View.GONE);
+                    joinRoomBtn.setVisibility(View.GONE);
+                    editRoomBtn.setVisibility(View.VISIBLE);
+                    viewRequestBtn.setVisibility(View.VISIBLE);
+                    deleteRoomBtn.setVisibility(View.VISIBLE);
+                } else {
+                    if(imInRoom){
+                        joinRoomBtn.setVisibility(View.GONE);
+                        leaveRoomBtn.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        joinRoomBtn.setVisibility(View.VISIBLE);
+                        leaveRoomBtn.setVisibility(View.GONE);
+                    }
+                    editRoomBtn.setVisibility(View.GONE);
+                    viewRequestBtn.setVisibility(View.GONE);
+                    deleteRoomBtn.setVisibility(View.GONE);
                 }
 
             }
@@ -107,6 +131,69 @@ public class RoomDetail extends AppCompatActivity {
 
             }
         });
+
+        Log.d("BOOLEAN", String.valueOf(imInRoom));
+
+
+
+        Log.d("room name", room.getUID());
+        room.setUID(room.getUID());
+        roomName.setText(room.getName());
+        roomDescription.setText(room.getDescription());
+        roomOwner.setText(room.getOwnerName());
+
+
+        adapter = new ParticipantsAdapter(this, members);//new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, members);
+
+
+        membersListView.setAdapter(adapter);
+
+
+        membersListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if(userUID.equals(membersUID.get(position))){
+                    return false;
+                }
+                MaterialAlertDialogBuilder a = new MaterialAlertDialogBuilder(RoomDetail.this)
+                        .setTitle("Escoja una opción")
+                        .setItems(R.array.participantsOptions, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        new MaterialAlertDialogBuilder(RoomDetail.this)
+                                .setTitle("Desea eliminar este participante?")
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        participantRef = FirebaseDatabase.getInstance().getReference("room_participants/"+room.getUID() + "/participants/" + membersUID.get(position));
+                                        participantRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+
+                    }
+                });
+                a.show();
+
+                return true;
+            }
+
+        });
+
+
 
         joinRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +218,33 @@ public class RoomDetail extends AppCompatActivity {
                 intent.putExtra("roomUID", room.getUID());
                 intent.putExtra("game", room.getGame());
                 RoomDetail.this.startActivity(intent);
+            }
+        });
+
+        leaveRoomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialAlertDialogBuilder(v.getContext())
+                        .setTitle("Desea salirse de la sala?")
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference delete = db.child(userUID);
+                                delete.removeValue();
+                                dialog.dismiss();
+                                //Intent intent = new Intent(RoomDetail.this, MyRoomsActivity.class);
+                                //.this.startActivity(intent);
+
+                                finish();
+                            }
+                        })
+                        .show();
             }
         });
 
