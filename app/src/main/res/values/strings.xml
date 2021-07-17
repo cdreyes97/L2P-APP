@@ -63,6 +63,8 @@
     </string-array>
     <string name="form_button">Crear Sala</string>
     <string name="title_activity_room_creation">RoomCreation</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="guardar_cambios">Guardar Cambios</string>
 
 
     <string-array name="participantsOptions">
