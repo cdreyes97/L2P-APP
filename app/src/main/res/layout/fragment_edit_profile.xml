@@ -17,12 +17,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="100dp">
+        app:cardCornerRadius="@dimen/profile_corner_radius">
 
         <ImageView
             android:id="@+id/profileUpdate"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/profile_width"
+            android:layout_height="@dimen/profile_height"
             app:layout_constraintBottom_toTopOf="@id/nameUpdate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,15 +30,6 @@
 
 
     </androidx.cardview.widget.CardView>
-
-    <!--<ImageView
-        android:id="@+id/profileUpdate"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toTopOf="@id/nameUpdate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
 
     <EditText
         android:id="@+id/nameUpdate"

@@ -8,4 +8,9 @@
     <dimen name="activity_padding">16dp</dimen>
     <dimen name="content_main_padding">8dp</dimen>
     <dimen name="drawer_padding">24dp</dimen>
+    <dimen name="profile_width">150dp</dimen>
+    <dimen name="profile_height">150dp</dimen>
+    <dimen name="profile_corner_radius">100dp</dimen>
+    <dimen name="nav_profile_width">85dp</dimen>
+    <dimen name="nav_profile_height">85dp</dimen>
 </resources>
