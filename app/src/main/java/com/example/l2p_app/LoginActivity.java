@@ -15,16 +15,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText name;
-    private EditText password;
+    private TextInputEditText name;
+    private TextInputEditText password;
     private Button loginButton;
-    private TextView userRegistration;
+    private MaterialButton userRegistration;
     private ProgressBar pgsBar;
 
     private FirebaseAuth firebaseAuth;

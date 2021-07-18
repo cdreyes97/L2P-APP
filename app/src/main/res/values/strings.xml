@@ -5,7 +5,8 @@
     <string name="login_password">Contraseña </string>
     <string name="login">Ingresar</string>
     <string name="enter_name">Nombre de usuario</string>
-    <string name="register_login">Nuevo usuario? <font fgcolor='#01C6DB'>Registrate!</font></string>
+<!--    <string name="register_login">Nuevo usuario? <font fgcolor='#01C6DB'>Registrate!</font></string>-->
+    <string name="register_login">Nuevo usuario?</string>
     <string name="register_email">Correo</string>
     <string name="register_button">Registrarse</string>
     <string name="login_register">Ya registrado? <font fgcolor='#01C6DB'>Inicia Sesión!</font></string>
@@ -65,6 +66,7 @@
     <string name="title_activity_room_creation">RoomCreation</string>
     <string name="nombre_de_usuario">Nombre de usuario</string>
     <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="register">Registrate!</string>
 
 
     <string-array name="participantsOptions">
