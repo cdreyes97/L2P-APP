@@ -27,8 +27,10 @@ import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,9 +46,9 @@ import java.io.IOException;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    private EditText userName, userPassword, userEmail;
+    private TextInputEditText userName, userPassword, userEmail;
     private Button regButton;
-    private TextView userLogin;
+    private MaterialButton userLogin;
     private ImageView userProfilePic;
     private ActivityRegistrationBinding binding;
     private FirebaseAuth firebaseAuth;
@@ -158,11 +160,11 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     private void setupUIViews(){
-        userName = (EditText)findViewById(R.id.userName);
-        userPassword = (EditText)findViewById(R.id.userPassword);
-        userEmail = (EditText)findViewById(R.id.userEmail);
+        userName = (TextInputEditText) findViewById(R.id.userName);
+        userPassword = (TextInputEditText) findViewById(R.id.userPassword);
+        userEmail = (TextInputEditText) findViewById(R.id.userEmail);
         regButton = (Button)findViewById(R.id.btnRegister);
-        userLogin = (TextView)findViewById(R.id.userLogin);
+        userLogin = (MaterialButton) findViewById(R.id.userLogin);
         userProfilePic = findViewById(R.id.regProfilePicture);
     }
 

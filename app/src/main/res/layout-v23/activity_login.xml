@@ -24,11 +24,13 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="@string/register_email"
+      android:importantForAutofill="no"
+      android:inputType="textEmailAddress"
       app:layout_constraintBottom_toTopOf="@id/passwordInput"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/imageView5"
-      app:startIconDrawable="@drawable/person"
+      app:startIconDrawable="@drawable/email"
       app:startIconTint="@color/design_default_color_primary"
       style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -40,26 +42,12 @@
 
   </com.google.android.material.textfield.TextInputLayout>
 
-
-  <!--<EditText
-      android:id="@+id/name"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawableStart="@drawable/person"
-      android:drawableTint="@color/design_default_color_primary"
-      android:hint="@string/register_email"
-      android:importantForAutofill="no"
-      android:inputType="textEmailAddress"
-      app:layout_constraintBottom_toTopOf="@id/password"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/imageView5" />-->
-
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/passwordInput"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:hint="@string/login_password"
+
       app:layout_constraintBottom_toBottomOf="@id/btnLogin"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -72,23 +60,11 @@
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:inputType="textWebPassword"
         />
 
   </com.google.android.material.textfield.TextInputLayout>
-
-  <!--<EditText
-      android:id="@+id/password"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawableStart="@drawable/lock"
-      android:drawableTint="@color/design_default_color_primary"
-      android:hint="@string/login_password"
-      android:importantForAutofill="no"
-      android:inputType="textWebPassword"
-      app:layout_constraintBottom_toBottomOf="@id/btnLogin"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/nameInput" />-->
 
 
   <Button
@@ -100,19 +76,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/passwordInput" />
-
-
-
-  <!--<TextView
-      android:id="@+id/register"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/register_login"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/btnLogin" />-->
 
   <LinearLayout
       android:id="@+id/registerLayout"
@@ -129,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_login"
-        android:textSize="20sp" />
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_weight="1"

@@ -9,7 +9,7 @@
     <string name="register_login">Nuevo usuario?</string>
     <string name="register_email">Correo</string>
     <string name="register_button">Registrarse</string>
-    <string name="login_register">Ya registrado? <font fgcolor='#01C6DB'>Inicia Sesión!</font></string>
+    <string name="login_register">Ya registrado?</string>
 
     <!-- Strings used messagin/notification service -->
     <string name="msg_token_fmt" translatable="true">FCM registration Token: %s</string>
@@ -67,6 +67,7 @@
     <string name="nombre_de_usuario">Nombre de usuario</string>
     <string name="guardar_cambios">Guardar Cambios</string>
     <string name="register">Registrate!</string>
+    <string name="inicia_sesi_n">Inicia Sesión!</string>
 
 
     <string-array name="participantsOptions">
