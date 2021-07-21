@@ -76,31 +76,29 @@
             android:id="@+id/myRoomName"
             android:layout_width="317dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceHeadline5" />
+            android:text="Room Name"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" /> />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="right"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                style="?attr/borderlessButtonStyle"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/MRDeleteBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
-                android:textColor="@color/red"
                 android:text="Eliminar" />
 
             <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/MREditBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar"
-                style="?attr/borderlessButtonStyle"
-                />
+                android:text="Editar" />
         </LinearLayout>
 
 

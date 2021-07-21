@@ -65,7 +65,7 @@ public class RoomContent extends Fragment {
         roomOwner = binding.roomOwner;
         joinRoomBtn = binding.joinRoomBtn;
         editRoomBtn = binding.editBtn;
-        deleteRoomBtn = binding.deleteBtn;
+//        deleteRoomBtn = binding.deleteBtn;
         viewRequestBtn = binding.viewRequestBtn;
         membersListView = binding.listOfMembers;
         firebaseAuth = FirebaseAuth.getInstance();
@@ -80,12 +80,12 @@ public class RoomContent extends Fragment {
             joinRoomBtn.setVisibility(View.GONE);
             editRoomBtn.setVisibility(View.VISIBLE);
             viewRequestBtn.setVisibility(View.VISIBLE);
-            deleteRoomBtn.setVisibility(View.VISIBLE);
+//            deleteRoomBtn.setVisibility(View.GONE);
         } else {
             joinRoomBtn.setVisibility(View.VISIBLE);
             editRoomBtn.setVisibility(View.GONE);
             viewRequestBtn.setVisibility(View.GONE);
-            deleteRoomBtn.setVisibility(View.GONE);
+//            deleteRoomBtn.setVisibility(View.GONE);
         }
 
         Log.d("My UID", firebaseAuth.getCurrentUser().getUid());

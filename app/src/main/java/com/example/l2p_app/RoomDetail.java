@@ -107,7 +107,7 @@ public class RoomDetail extends AppCompatActivity {
                 if (room.getOwnerUID().equals(userUID)) {
                     leaveRoomBtn.setVisibility(View.GONE);
                     joinRoomBtn.setVisibility(View.GONE);
-                    editRoomBtn.setVisibility(View.VISIBLE);
+                    editRoomBtn.setVisibility(View.GONE);
                     viewRequestBtn.setVisibility(View.VISIBLE);
                     deleteRoomBtn.setVisibility(View.VISIBLE);
                 } else {
