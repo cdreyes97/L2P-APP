@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RoomCreation"
-    android:padding="16dp">
+    android:padding="24dp">
 
 
     <!--<TextView

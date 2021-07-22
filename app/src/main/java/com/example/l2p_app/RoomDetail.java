@@ -225,7 +225,7 @@ public class RoomDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new MaterialAlertDialogBuilder(v.getContext())
-                        .setTitle("Desea salirse de la sala?")
+                        .setTitle("Desea salir de la sala?")
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

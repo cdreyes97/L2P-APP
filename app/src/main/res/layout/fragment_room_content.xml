@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="24dp"
     tools:context=".RoomDetail">
 
     <TextView
@@ -34,10 +34,9 @@
 
     <TextView
         android:id="@+id/roomDescription"
-        android:layout_width="385dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:paddingTop="8dp"
-        android:paddingLeft="16dp"
         android:textAppearance="?attr/textAppearanceBody2"
         android:text="Descripcion texto" />
 
