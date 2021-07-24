@@ -7,17 +7,33 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.l2p_app.models.MyRequest;
+import com.example.l2p_app.models.MySingleton;
 import com.example.l2p_app.models.Request;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SendRequestActivity extends AppCompatActivity {
 
@@ -25,12 +41,13 @@ public class SendRequestActivity extends AppCompatActivity {
     final private String serverKey = "key=" + "AAAAoac6FsI:APA91bEXNuvc8k9Ln9wLGUOpkdlTi7OW3sR_VCHWtXopWnz-AO4c0zJGGas2F0zAIL5pauRf-rdO-Nzgnfm8qSApWO1WwYNvtqGzggmo7s1NCR8Q-kdNXhJkq_lgIp8tzPQIQ9WB7DY6";
     final private String contentType = "application/json";
     final String TAG = "NOTIFICATION TAG";
+    private String TOPIC,NOTIFICATION_TITLE,NOTIFICATION_MESSAGE,USER_TOKEN;
 
     private TextInputLayout msgRequest;
     private Button sendRequestBtn, cancelBtn;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference db;
-    private String game, roomUID;
+    private DatabaseReference db, roomReference;
+    private String game, roomUID, roomName,ownerUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +62,9 @@ public class SendRequestActivity extends AppCompatActivity {
 
         roomUID = intent.getStringExtra("roomUID");
         game = intent.getStringExtra("game");
+        roomName = intent.getStringExtra("roomName");
+        ownerUID = intent.getStringExtra("ownerUID");
+
 
         msgRequest = findViewById(R.id.msgRequest);
         sendRequestBtn = findViewById(R.id.sendRequest);
@@ -74,39 +94,34 @@ public class SendRequestActivity extends AppCompatActivity {
                 requestPerUsers.setValue(myRequest);
                 FirebaseMessaging.getInstance().subscribeToTopic(roomUID);
 
-                /*
-                TOPIC = "/topics/userABC"; //topic must match with what the receiver subscribed to
+                //TOPIC = "/topics/userABC"; //topic must match with what the receiver subscribed to
                 NOTIFICATION_TITLE = "Nueva solicitud";
-                NOTIFICATION_MESSAGE = "Tienes una nueva solicitud para la sala NUEVA SALA"; //tomar nombre de sala
-                USER_TOKEN = "eLsbe_nnRpKRQhv19Fnuy2:APA91bE9WJrRYjTAWJhjrHd7_2NtJz1gujGnpBTbZKqszDZsX9JrNMLmDfK2oElYmtwzAZLYWJsq3mPnK1U46Vay9635IAzQJYWMVZ7G2ybW445U0ratFU2w6La61DP5TqiM9sNuoxvf";
+                NOTIFICATION_MESSAGE = "Tienes una nueva solicitud para la sala " + roomName; //tomar nombre de sala
 
-                JSONObject notification = new JSONObject();
-                JSONObject notifcationBody = new JSONObject();
+                roomReference = FirebaseDatabase.getInstance().getReference("Users/" + ownerUID);
+                roomReference.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                        USER_TOKEN = task.getResult().getValue().toString();
+                        JSONObject notification = new JSONObject();
+                        JSONObject notifcationBody = new JSONObject();
 
-                {
-                    to:
-                    "Topic" or REGISTRATION_ID -token unico de la aplicacion para cada dispositivo
-                    data:
-                    {
-                        title:
-                        message:
+
+                        try {
+                            notifcationBody.put("title", NOTIFICATION_TITLE);
+                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                            notification.put("to", USER_TOKEN);
+                            notification.put("data", notifcationBody);
+                            notification.put("time_to_live", 600);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "onCreate: " + e.getMessage() );
+                        }
+                        sendNotification(notification);
+
                     }
-                    time_to_live:
-                    "600" opcional
-                }
+                });
 
-                try {
-                    notifcationBody.put("title", NOTIFICATION_TITLE);
-                    notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-                    notification.put("to", USER_TOKEN);
-                    notification.put("data", notifcationBody);
-                    notification.put("time_to_live", 600);
-                } catch (JSONException e) {
-                    Log.e(TAG, "onCreate: " + e.getMessage() );
-                }
-                sendNotification(notification);
-                */
 
                 AlertDialog.Builder confDialogBuilder = new AlertDialog.Builder(SendRequestActivity.this)
                         .setTitle("Confirmación")
@@ -140,5 +155,34 @@ public class SendRequestActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+                        //edtTitle.setText("");
+                        //edtMessage.setText("");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(SendRequestActivity.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 }

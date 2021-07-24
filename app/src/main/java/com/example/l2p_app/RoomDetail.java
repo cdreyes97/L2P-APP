@@ -44,7 +44,7 @@ public class RoomDetail extends AppCompatActivity {
     private DatabaseReference db,participantRef;
     private TextView roomName, roomOwner, roomDescription;
     private ListView membersListView;
-    private Button joinRoomBtn, leaveRoomBtn, editRoomBtn, deleteRoomBtn, viewRequestBtn;
+    private Button joinRoomBtn, leaveRoomBtn, editRoomBtn, deleteRoomBtn, viewRequestBtn, pendingRoomBtn;
     private String gameName, roomUID, ownerUID;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> members,membersUID;
@@ -158,6 +158,9 @@ public class RoomDetail extends AppCompatActivity {
                 if(userUID.equals(membersUID.get(position))){
                     return false;
                 }
+                else if(!room.getOwnerUID().equals(userUID)){
+                    return false;
+                }
                 MaterialAlertDialogBuilder a = new MaterialAlertDialogBuilder(RoomDetail.this)
                         .setTitle("Escoja una opción")
                         .setItems(R.array.participantsOptions, new DialogInterface.OnClickListener(){
@@ -234,6 +237,8 @@ public class RoomDetail extends AppCompatActivity {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("roomUID", room.getUID());
                             intent.putExtra("game", room.getGame());
+                            intent.putExtra("ownerUID", room.getOwnerUID());
+                            intent.putExtra("roomName",room.getName());
                             startActivity(intent);
                         }
 
