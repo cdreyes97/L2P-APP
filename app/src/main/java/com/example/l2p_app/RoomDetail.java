@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.DialogInterface;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.l2p_app.adapters.MyRoomsAdapter;
 import com.example.l2p_app.adapters.ParticipantsAdapter;
+import com.example.l2p_app.models.MyRequest;
+import com.example.l2p_app.models.Request;
 import com.example.l2p_app.models.Room;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -198,11 +201,51 @@ public class RoomDetail extends AppCompatActivity {
         joinRoomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RoomDetail.this, SendRequestActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("roomUID", room.getUID());
-                intent.putExtra("game", room.getGame());
-                startActivity(intent);
+
+                db = FirebaseDatabase.getInstance().getReference("request_per_room/" + room.getGame() + "/" + room.getUID());
+
+                db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            boolean access = true;
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                Request r = ds.getValue(Request.class);
+                                if (r.getUserUID().equals(userUID)){
+                                    access = false;
+                                    AlertDialog.Builder confDialogBuilder = new AlertDialog.Builder(RoomDetail.this)
+                                            .setTitle("Cuidado")
+                                            .setMessage("Ya has enviado una solicitud")
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    dialog.dismiss();
+                                                }});
+
+                                    AlertDialog confDialog = confDialogBuilder.create();
+                                    confDialog.show();
+                                }
+                            }
+
+                            if (access) {
+                                Intent intent = new Intent(RoomDetail.this, SendRequestActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("roomUID", room.getUID());
+                                intent.putExtra("game", room.getGame());
+                                startActivity(intent);
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             }
         });
 
