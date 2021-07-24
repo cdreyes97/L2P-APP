@@ -127,6 +127,8 @@ public class SendRequest extends DialogFragment {
                     }
                     time_to_live: "600" opcional
                 }
+                */
+                /*
                 try {
                     notifcationBody.put("title", NOTIFICATION_TITLE);
                     notifcationBody.put("message", NOTIFICATION_MESSAGE);
@@ -137,7 +139,8 @@ public class SendRequest extends DialogFragment {
                 } catch (JSONException e) {
                     Log.e(TAG, "onCreate: " + e.getMessage() );
                 }
-                sendNotification(notification);*/
+                sendNotification(notification);
+                */
 
                 getDialog().dismiss();
 
