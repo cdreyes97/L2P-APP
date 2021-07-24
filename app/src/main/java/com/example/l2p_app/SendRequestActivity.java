@@ -1,11 +1,13 @@
 package com.example.l2p_app;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -34,6 +36,10 @@ public class SendRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_request);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setTitle("Enviar Solicitud");
 
         Intent intent = this.getIntent();
 
@@ -123,8 +129,16 @@ public class SendRequestActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
