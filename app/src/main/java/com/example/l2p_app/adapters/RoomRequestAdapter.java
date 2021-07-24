@@ -112,7 +112,7 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
             @Override
             public void onClick(View v) {
                 deleteRequests(request, game, position);
-                NOTIFICATION_TITLE = "Solicitud aceptada";
+                NOTIFICATION_TITLE = "Solicitud rechazada";
                 NOTIFICATION_MESSAGE = "Su solicitud para la sala " + room.getName() +" a sido rechazada"; //tomar nombre de sala
 
                 db = FirebaseDatabase.getInstance().getReference("Users/" + request.getUserUID());
