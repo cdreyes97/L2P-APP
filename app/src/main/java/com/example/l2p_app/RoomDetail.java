@@ -261,6 +261,7 @@ public class RoomDetail extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("roomUID", room.getUID());
                 intent.putExtra("game", room.getGame());
+                intent.putExtra("room", room);
                 RoomDetail.this.startActivity(intent);
             }
         });

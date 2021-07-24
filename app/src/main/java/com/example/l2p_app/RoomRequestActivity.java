@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.example.l2p_app.adapters.RoomRequestAdapter;
 import com.example.l2p_app.models.MyRequest;
 import com.example.l2p_app.models.Request;
+import com.example.l2p_app.models.Room;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class RoomRequestActivity extends AppCompatActivity {
 
     private String roomUID, game;
+    private Room room;
     private RecyclerView rv;
     private DatabaseReference db;
     private RoomRequestAdapter adapter;
@@ -44,10 +46,12 @@ public class RoomRequestActivity extends AppCompatActivity {
         roomUID = intent.getStringExtra("roomUID");
         game = intent.getStringExtra("game");
 
+        room = (Room) intent.getSerializableExtra("room");
+
         rv = findViewById(R.id.roomRequestsList);
         rv.setLayoutManager(new LinearLayoutManager(this));
         requests = new ArrayList<>();
-        adapter = new RoomRequestAdapter(this, requests, game);
+        adapter = new RoomRequestAdapter(this, requests, game, room);
 
         rv.setAdapter(adapter);
 

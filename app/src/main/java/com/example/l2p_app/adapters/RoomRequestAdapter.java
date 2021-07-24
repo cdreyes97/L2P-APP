@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.l2p_app.R;
 import com.example.l2p_app.models.MyRequest;
 import com.example.l2p_app.models.Request;
+import com.example.l2p_app.models.Room;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,11 +25,13 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
     Context context;
     ArrayList<Request> requests;
     String game;
+    Room room;
 
-    public RoomRequestAdapter(Context context, ArrayList<Request> requests, String game) {
+    public RoomRequestAdapter(Context context, ArrayList<Request> requests, String game, Room room) {
         this.context = context;
         this.requests = requests;
         this.game = game;
+        this.room = room;
     }
 
     @NonNull
