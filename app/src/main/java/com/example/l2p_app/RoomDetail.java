@@ -207,8 +207,8 @@ public class RoomDetail extends AppCompatActivity {
                 db.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean access = true;
                         if (snapshot.exists()) {
-                            boolean access = true;
                             for (DataSnapshot ds : snapshot.getChildren()) {
                                 Request r = ds.getValue(Request.class);
                                 if (r.getUserUID().equals(userUID)){
@@ -227,14 +227,14 @@ public class RoomDetail extends AppCompatActivity {
                                     confDialog.show();
                                 }
                             }
-
-                            if (access) {
-                                Intent intent = new Intent(RoomDetail.this, SendRequestActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("roomUID", room.getUID());
-                                intent.putExtra("game", room.getGame());
-                                startActivity(intent);
-                            }
+                        }
+                        if (access) {
+                            Log.d("access", "entré");
+                            Intent intent = new Intent(RoomDetail.this, SendRequestActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("roomUID", room.getUID());
+                            intent.putExtra("game", room.getGame());
+                            startActivity(intent);
                         }
 
                     }
