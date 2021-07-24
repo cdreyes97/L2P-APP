@@ -1,24 +1,40 @@
 package com.example.l2p_app.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.l2p_app.R;
+import com.example.l2p_app.SendRequestActivity;
 import com.example.l2p_app.models.MyRequest;
+import com.example.l2p_app.models.MySingleton;
 import com.example.l2p_app.models.Request;
 import com.example.l2p_app.models.Room;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.MyViewHolder>{
 
@@ -26,6 +42,13 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
     ArrayList<Request> requests;
     String game;
     Room room;
+
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAoac6FsI:APA91bEXNuvc8k9Ln9wLGUOpkdlTi7OW3sR_VCHWtXopWnz-AO4c0zJGGas2F0zAIL5pauRf-rdO-Nzgnfm8qSApWO1WwYNvtqGzggmo7s1NCR8Q-kdNXhJkq_lgIp8tzPQIQ9WB7DY6";
+    final private String contentType = "application/json";
+    final String TAG = "NOTIFICATION TAG";
+    private String TOPIC,NOTIFICATION_TITLE,NOTIFICATION_MESSAGE,USER_TOKEN;
+    private DatabaseReference db;
 
     public RoomRequestAdapter(Context context, ArrayList<Request> requests, String game, Room room) {
         this.context = context;
@@ -55,6 +78,32 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
                 addParticipant.child(request.getUserUID()).setValue(request.getUserName());
                 deleteRequests(request, game, position);
 
+                NOTIFICATION_TITLE = "Solicitud aceptada";
+                NOTIFICATION_MESSAGE = "Su solicitud para la sala " + room.getName() +" a sido aceptada"; //tomar nombre de sala
+
+                db = FirebaseDatabase.getInstance().getReference("Users/" + request.getUserUID());
+                db.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        USER_TOKEN = task.getResult().getValue().toString();
+                        JSONObject notification = new JSONObject();
+                        JSONObject notifcationBody = new JSONObject();
+
+
+                        try {
+                            notifcationBody.put("title", NOTIFICATION_TITLE);
+                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                            notification.put("to", USER_TOKEN);
+                            notification.put("data", notifcationBody);
+                            notification.put("time_to_live", 600);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "onCreate: " + e.getMessage() );
+                        }
+                        sendNotification(notification);
+
+                    }
+                });
                 
             }
         });
@@ -63,6 +112,32 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
             @Override
             public void onClick(View v) {
                 deleteRequests(request, game, position);
+                NOTIFICATION_TITLE = "Solicitud aceptada";
+                NOTIFICATION_MESSAGE = "Su solicitud para la sala " + room.getName() +" a sido rechazada"; //tomar nombre de sala
+
+                db = FirebaseDatabase.getInstance().getReference("Users/" + request.getUserUID());
+                db.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        USER_TOKEN = task.getResult().getValue().toString();
+                        JSONObject notification = new JSONObject();
+                        JSONObject notifcationBody = new JSONObject();
+
+
+                        try {
+                            notifcationBody.put("title", NOTIFICATION_TITLE);
+                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                            notification.put("to", USER_TOKEN);
+                            notification.put("data", notifcationBody);
+                            notification.put("time_to_live", 600);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "onCreate: " + e.getMessage() );
+                        }
+                        sendNotification(notification);
+
+                    }
+                });
             }
         });
     }
@@ -103,5 +178,33 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
             rejectBtn = itemView.findViewById(R.id.rejectBtn);
 
         }
+    }
+
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+                        //edtTitle.setText("");
+                        //edtMessage.setText("");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 }
