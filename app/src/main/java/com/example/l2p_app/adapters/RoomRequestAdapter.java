@@ -51,6 +51,8 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
                 DatabaseReference addParticipant = FirebaseDatabase.getInstance().getReference("room_participants/" + request.getRoomUID() + "/participants");
                 addParticipant.child(request.getUserUID()).setValue(request.getUserName());
                 deleteRequests(request, game, position);
+
+                
             }
         });
 

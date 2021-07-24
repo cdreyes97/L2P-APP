@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.l2p_app.EditRoom;
+import com.example.l2p_app.EditRoomActivity;
 import com.example.l2p_app.R;
 import com.example.l2p_app.RoomDetail;
 import com.example.l2p_app.models.Room;
@@ -95,13 +96,10 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentActivity activity = (FragmentActivity)(context);
-                FragmentManager fm = activity.getSupportFragmentManager();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("room", room);
-                EditRoom fragment = new EditRoom();
-                fragment.setArguments(bundle);
-                fragment.show(fm, "Edit Room");
+                Intent intent = new Intent(context, EditRoomActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("room", room);
+                context.startActivity(intent);
 
             }
         });
