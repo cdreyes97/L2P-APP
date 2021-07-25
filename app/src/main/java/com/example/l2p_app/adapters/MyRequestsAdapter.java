@@ -135,7 +135,7 @@ public class MyRequestsAdapter extends RecyclerView.Adapter<MyRequestsAdapter.My
         removePerRoom.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                notifyItemRemoved(position);
+                MyRequestsAdapter.this.notifyItemRemoved(position);
             }
         });
     }

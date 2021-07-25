@@ -53,6 +53,7 @@ public class MyRequests extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                requests.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     MyRequest request = ds.getValue(MyRequest.class);
                     requests.add(request);
