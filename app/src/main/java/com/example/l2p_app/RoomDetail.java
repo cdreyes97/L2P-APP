@@ -44,7 +44,7 @@ public class RoomDetail extends AppCompatActivity {
     private DatabaseReference db,participantRef;
     private TextView roomName, roomOwner, roomDescription;
     private ListView membersListView;
-    private Button joinRoomBtn, leaveRoomBtn, editRoomBtn, deleteRoomBtn, viewRequestBtn, pendingRoomBtn;
+    private Button joinRoomBtn, leaveRoomBtn, viewRequestBtn, pendingRoomBtn;
     private String gameName, roomUID, ownerUID;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> members,membersUID;
@@ -86,8 +86,6 @@ public class RoomDetail extends AppCompatActivity {
         membersListView = findViewById(R.id.listOfMembers);
         joinRoomBtn = findViewById(R.id.joinRoomBtn);
         leaveRoomBtn = findViewById(R.id.leaveRoomBtn);
-        editRoomBtn = findViewById(R.id.editBtn);
-        deleteRoomBtn = findViewById(R.id.deleteBtn);
         viewRequestBtn = findViewById(R.id.viewRequestBtn);
 
         members = new ArrayList<>();
@@ -110,9 +108,7 @@ public class RoomDetail extends AppCompatActivity {
                 if (room.getOwnerUID().equals(userUID)) {
                     leaveRoomBtn.setVisibility(View.GONE);
                     joinRoomBtn.setVisibility(View.GONE);
-                    editRoomBtn.setVisibility(View.GONE);
                     viewRequestBtn.setVisibility(View.VISIBLE);
-                    deleteRoomBtn.setVisibility(View.VISIBLE);
                 } else {
                     if(imInRoom){
                         joinRoomBtn.setVisibility(View.GONE);
@@ -122,9 +118,8 @@ public class RoomDetail extends AppCompatActivity {
                         joinRoomBtn.setVisibility(View.VISIBLE);
                         leaveRoomBtn.setVisibility(View.GONE);
                     }
-                    editRoomBtn.setVisibility(View.GONE);
                     viewRequestBtn.setVisibility(View.GONE);
-                    deleteRoomBtn.setVisibility(View.GONE);
+
                 }
 
             }

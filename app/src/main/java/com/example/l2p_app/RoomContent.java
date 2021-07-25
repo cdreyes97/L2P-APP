@@ -64,8 +64,6 @@ public class RoomContent extends Fragment {
         roomDescription = binding.roomDescription;
         roomOwner = binding.roomOwner;
         joinRoomBtn = binding.joinRoomBtn;
-        editRoomBtn = binding.editBtn;
-//        deleteRoomBtn = binding.deleteBtn;
         viewRequestBtn = binding.viewRequestBtn;
         membersListView = binding.listOfMembers;
         firebaseAuth = FirebaseAuth.getInstance();
