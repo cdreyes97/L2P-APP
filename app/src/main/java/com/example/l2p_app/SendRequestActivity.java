@@ -74,68 +74,71 @@ public class SendRequestActivity extends AppCompatActivity {
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validateFields()){
+                    firebaseAuth = FirebaseAuth.getInstance();
+                    String userName = firebaseAuth.getCurrentUser().getDisplayName();
+                    String userUID = firebaseAuth.getCurrentUser().getUid();
+                    String stringMsgRequest = msgRequest.getEditText().getText().toString();
 
-                firebaseAuth = FirebaseAuth.getInstance();
-                String userName = firebaseAuth.getCurrentUser().getDisplayName();
-                String userUID = firebaseAuth.getCurrentUser().getUid();
-                String stringMsgRequest = msgRequest.getEditText().getText().toString();
+                    Request request = new Request(userName, userUID, stringMsgRequest, roomUID, Request.Status.PENDIENTE);
 
-                Request request = new Request(userName, userUID, stringMsgRequest, roomUID, Request.Status.PENDIENTE);
+                    db = FirebaseDatabase.getInstance().getReference("request_per_room/" + game + "/" + roomUID);
+                    DatabaseReference requestPerRoom = db.push();
+                    String requestUID = requestPerRoom.getKey();
+                    requestPerRoom.setValue(request);
 
-                db = FirebaseDatabase.getInstance().getReference("request_per_room/" + game + "/" + roomUID);
-                DatabaseReference requestPerRoom = db.push();
-                String requestUID = requestPerRoom.getKey();
-                requestPerRoom.setValue(request);
+                    MyRequest myRequest = new MyRequest(stringMsgRequest, roomUID, game, MyRequest.Status.PENDIENTE);
 
-                MyRequest myRequest = new MyRequest(stringMsgRequest, roomUID, game, MyRequest.Status.PENDIENTE);
+                    db = FirebaseDatabase.getInstance().getReference("request_per_users/" + userUID);
+                    DatabaseReference requestPerUsers = db.child(requestUID);
+                    requestPerUsers.setValue(myRequest);
+                    FirebaseMessaging.getInstance().subscribeToTopic(roomUID);
 
-                db = FirebaseDatabase.getInstance().getReference("request_per_users/" + userUID);
-                DatabaseReference requestPerUsers = db.child(requestUID);
-                requestPerUsers.setValue(myRequest);
-                FirebaseMessaging.getInstance().subscribeToTopic(roomUID);
+                    //TOPIC = "/topics/userABC"; //topic must match with what the receiver subscribed to
+                    NOTIFICATION_TITLE = "Nueva solicitud";
+                    NOTIFICATION_MESSAGE = "Tienes una nueva solicitud para la sala " + roomName; //tomar nombre de sala
 
-                //TOPIC = "/topics/userABC"; //topic must match with what the receiver subscribed to
-                NOTIFICATION_TITLE = "Nueva solicitud";
-                NOTIFICATION_MESSAGE = "Tienes una nueva solicitud para la sala " + roomName; //tomar nombre de sala
-
-                roomReference = FirebaseDatabase.getInstance().getReference("Users/" + ownerUID);
-                roomReference.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull  Task<DataSnapshot> task) {
-                        USER_TOKEN = task.getResult().getValue().toString();
-                        JSONObject notification = new JSONObject();
-                        JSONObject notifcationBody = new JSONObject();
+                    roomReference = FirebaseDatabase.getInstance().getReference("Users/" + ownerUID);
+                    roomReference.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                            USER_TOKEN = task.getResult().getValue().toString();
+                            JSONObject notification = new JSONObject();
+                            JSONObject notifcationBody = new JSONObject();
 
 
-                        try {
-                            notifcationBody.put("title", NOTIFICATION_TITLE);
-                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+                            try {
+                                notifcationBody.put("title", NOTIFICATION_TITLE);
+                                notifcationBody.put("message", NOTIFICATION_MESSAGE);
 
-                            notification.put("to", USER_TOKEN);
-                            notification.put("data", notifcationBody);
-                            notification.put("time_to_live", 600);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "onCreate: " + e.getMessage() );
+                                notification.put("to", USER_TOKEN);
+                                notification.put("data", notifcationBody);
+                                notification.put("time_to_live", 600);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "onCreate: " + e.getMessage() );
+                            }
+                            sendNotification(notification);
+
                         }
-                        sendNotification(notification);
-
-                    }
-                });
+                    });
 
 
-                AlertDialog.Builder confDialogBuilder = new AlertDialog.Builder(SendRequestActivity.this)
-                        .setTitle("Confirmación")
-                        .setMessage("Solicitud enviada")
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder confDialogBuilder = new AlertDialog.Builder(SendRequestActivity.this)
+                            .setTitle("Confirmación")
+                            .setMessage("Solicitud enviada")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                finish();
-                            }});
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    finish();
+                                }});
 
-                AlertDialog confDialog = confDialogBuilder.create();
-                confDialog.show();
+                    AlertDialog confDialog = confDialogBuilder.create();
+                    confDialog.show();
+                }
             }
+
+
         });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +159,18 @@ public class SendRequestActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public boolean validateFields(){
+        String msg = msgRequest.getEditText().getText().toString();
+
+        if (msg.isEmpty()) {
+            Toast.makeText(this, "Por favor ingrese un mensaje", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
 
 
     private void sendNotification(JSONObject notification) {
