@@ -140,6 +140,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         DatabaseReference roomReference = FirebaseDatabase.getInstance().getReference("Rooms/"+game+"/" + roomUID);
         DatabaseReference roomParticipants  = FirebaseDatabase.getInstance().getReference("room_participants/"+ roomUID);
         DatabaseReference myRoom  = FirebaseDatabase.getInstance().getReference("room_owner/"+ ownerUID + "/"+ game+ "/" + roomUID);
+        DatabaseReference requests = FirebaseDatabase.getInstance().getReference("request_per_room/"+ game + "/"+ roomUID);
         myRoom.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -152,6 +153,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             }
         });
         roomReference.removeValue();
+        requests.removeValue();
 
 
 
