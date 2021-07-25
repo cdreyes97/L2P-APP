@@ -80,7 +80,7 @@ public class MyRequestsAdapter extends RecyclerView.Adapter<MyRequestsAdapter.My
             @Override
             public void onClick(View v) {
                 new MaterialAlertDialogBuilder(v.getContext())
-                        .setTitle("Desea eliminar esta sala?")
+                        .setTitle("Desea eliminar esta solicitud?")
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
