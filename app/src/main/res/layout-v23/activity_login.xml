@@ -16,8 +16,8 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/looking2play_logo"
-      tools:srcCompat="@drawable/looking2play_logo" />
+      app:srcCompat="@drawable/looking2play_logo_m"
+      tools:srcCompat="@drawable/looking2play_logo_m" />
 
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/nameInput"
