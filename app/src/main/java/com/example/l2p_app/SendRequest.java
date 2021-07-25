@@ -103,7 +103,7 @@ public class SendRequest extends DialogFragment {
                 String requestUID = requestPerRoom.getKey();
                 requestPerRoom.setValue(request);
 
-                MyRequest myRequest = new MyRequest(stringMsgRequest, roomUID, game, MyRequest.Status.PENDIENTE);
+                MyRequest myRequest = new MyRequest(stringMsgRequest, roomUID, game, requestUID,MyRequest.Status.PENDIENTE);
 
                 db = FirebaseDatabase.getInstance().getReference("request_per_users/" + userUID);
                 DatabaseReference requestPerUsers = db.child(requestUID);

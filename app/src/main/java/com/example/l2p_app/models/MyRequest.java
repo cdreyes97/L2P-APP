@@ -12,17 +12,27 @@ public class MyRequest {
     private String RoomUID;
     private String game;
     private MyRequest.Status Status;
+    private String requestUID;
 
-    public MyRequest(String message, String roomUID, String game, MyRequest.Status status) {
+    public MyRequest(String message, String roomUID, String game, String requestUID, MyRequest.Status status) {
 
         this.message = message;
         RoomUID = roomUID;
         this.game = game;
         Status = status;
+        this.requestUID = requestUID;
     }
 
     public MyRequest() {}
 
+
+    public String getRequestUID() {
+        return requestUID;
+    }
+
+    public void setRequestUID(String requestUID) {
+        this.requestUID = requestUID;
+    }
 
     public String getMessage() {
         return message;
