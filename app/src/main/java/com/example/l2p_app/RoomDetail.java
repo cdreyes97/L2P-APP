@@ -206,8 +206,9 @@ public class RoomDetail extends AppCompatActivity {
             public void onClick(View v) {
 
                 db = FirebaseDatabase.getInstance().getReference("request_per_room/" + room.getGame() + "/" + room.getUID());
+                
 
-                db.addValueEventListener(new ValueEventListener() {
+                db.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         boolean access = true;
@@ -228,6 +229,7 @@ public class RoomDetail extends AppCompatActivity {
 
                                     AlertDialog confDialog = confDialogBuilder.create();
                                     confDialog.show();
+                                    break;
                                 }
                             }
                         }
