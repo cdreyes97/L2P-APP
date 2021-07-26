@@ -42,7 +42,7 @@ public class RoomDetail extends AppCompatActivity {
 
     private Room room;
     private DatabaseReference db,participantRef;
-    private TextView roomName, roomOwner, roomDescription;
+    private TextView roomName, roomOwner, roomDescription, roomCapacity;
     private ListView membersListView;
     private Button joinRoomBtn, leaveRoomBtn, viewRequestBtn, pendingRoomBtn;
     private String gameName, roomUID, ownerUID;
@@ -84,6 +84,7 @@ public class RoomDetail extends AppCompatActivity {
         roomOwner = findViewById(R.id.roomOwner);
         roomDescription = findViewById(R.id.roomDescription);
         membersListView = findViewById(R.id.listOfMembers);
+        roomCapacity = findViewById(R.id.roomCapacityTotal);
         joinRoomBtn = findViewById(R.id.joinRoomBtn);
         leaveRoomBtn = findViewById(R.id.leaveRoomBtn);
         viewRequestBtn = findViewById(R.id.viewRequestBtn);
@@ -139,6 +140,7 @@ public class RoomDetail extends AppCompatActivity {
         roomName.setText(room.getName());
         roomDescription.setText(room.getDescription());
         roomOwner.setText(room.getOwnerName());
+        roomCapacity.setText(String.valueOf(room.getRoomCapacity()));
 
 
         adapter = new ParticipantsAdapter(this, members);//new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, members);
@@ -180,6 +182,7 @@ public class RoomDetail extends AppCompatActivity {
                                                 String roomUID = room.getUID();
                                                 DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("Rooms/" + room.getGame());
                                                 room.setCapacityUsed(room.getCapacityUsed() - 1);
+                                                room.setUID(null);
                                                 roomRef.child(roomUID).setValue(room).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void unused) {

@@ -84,6 +84,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.MyViewHolder>{
             roomOwner = itemView.findViewById(R.id.roomOwner);
             ownerUID = itemView.findViewById(R.id.ownerUID);
 
+
         }
     }
 

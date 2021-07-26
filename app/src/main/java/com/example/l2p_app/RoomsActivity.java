@@ -73,7 +73,7 @@ public class RoomsActivity extends AppCompatActivity {
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+                rooms.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Room room = ds.getValue(Room.class);
                     room.setUID(ds.getKey());

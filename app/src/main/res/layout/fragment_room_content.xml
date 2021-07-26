@@ -59,20 +59,13 @@
             android:textAppearance="?attr/textAppearanceButton"
             android:text="Equipo (" />
 
-        <TextView
-            android:id="@+id/roomCapacityUsed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:textAppearance="?attr/textAppearanceButton"
-            android:text="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:textAppearance="?attr/textAppearanceButton"
-            android:text=" / " />
+            android:text="máx. " />
 
         <TextView
             android:id="@+id/roomCapacityTotal"
