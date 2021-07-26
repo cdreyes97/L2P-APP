@@ -107,7 +107,7 @@ public class EditRoomActivity extends AppCompatActivity {
         }
 
         if (integerNumPlayers < room.getCapacityUsed()) {
-            Toast.makeText(this, "El número de participantes es menor a la cantidad que ya está en la sala.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "El número de participantes es menor a la cantidad que ya está en la sala.", Toast.LENGTH_LONG).show();
             return false;
         }
 
