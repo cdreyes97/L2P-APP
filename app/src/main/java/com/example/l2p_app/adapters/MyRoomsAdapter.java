@@ -51,9 +51,9 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
         Room room = rooms.get(position);
         holder.name.setText(room.getName());
-        //holder.description.setText(room.getDescription());
+        holder.game.setText(room.getGame());
         holder.roomUID.setText(room.getUID());
-        //holder.roomOwner.setText(room.getOwnerName());
+        holder.roomOwner.setText(room.getOwnerName());
         holder.ownerUID.setText(room.getOwnerUID());
 
         MyRoomsAdapter adapter = this;
@@ -114,7 +114,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name, roomUID, ownerUID;
+        private TextView name, roomUID, ownerUID, roomOwner, game;
         public View view;
         private Button deleteBtn;
         private Button editBtn;
@@ -123,9 +123,9 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             super(itemView);
             view = itemView;
             name = itemView.findViewById(R.id.myRoomName);
-            //description = itemView.findViewById(R.id.roomDesc);
+            game = itemView.findViewById(R.id.game);
             roomUID = itemView.findViewById(R.id.myRoomUID);
-            //roomOwner = itemView.findViewById(R.id.roomOwner);
+            roomOwner = itemView.findViewById(R.id.roomOwner);
             ownerUID = itemView.findViewById(R.id.myRoomOwnerUID);
             deleteBtn = itemView.findViewById(R.id.MRDeleteBtn);
             editBtn = itemView.findViewById(R.id.MREditBtn);

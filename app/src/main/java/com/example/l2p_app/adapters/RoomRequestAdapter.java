@@ -69,6 +69,7 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
         Request request = requests.get(position);
         holder.userName.setText(request.getUserName());
         holder.userMsg.setText(request.getMessage());
+        holder.roomName.setText(room.getName());
 
         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,13 +166,14 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView userName, userMsg;
+        private TextView userName, userMsg, roomName;
         private Button acceptBtn, rejectBtn;
         public View view;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             view = itemView;
+            roomName = itemView.findViewById(R.id.roomName);
             userName = itemView.findViewById(R.id.userName);
             userMsg = itemView.findViewById(R.id.userMessage);
             acceptBtn = itemView.findViewById(R.id.acceptBtn);

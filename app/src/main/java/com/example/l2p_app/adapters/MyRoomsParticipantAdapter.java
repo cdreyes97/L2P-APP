@@ -50,9 +50,9 @@ public class MyRoomsParticipantAdapter extends RecyclerView.Adapter< MyRoomsPart
 
         Room room = rooms.get(position);
         holder.name.setText(room.getName());
-        //holder.description.setText(room.getDescription());
+        holder.game.setText(room.getGame());
         holder.roomUID.setText(room.getUID());
-        //holder.roomOwner.setText(room.getOwnerName());
+        holder.roomOwner.setText(room.getOwnerName());
         holder.ownerUID.setText(room.getOwnerUID());
         holder.editBtn.setVisibility(View.GONE);
         holder.deleteBtn.setVisibility(View.GONE);
@@ -81,7 +81,7 @@ public class MyRoomsParticipantAdapter extends RecyclerView.Adapter< MyRoomsPart
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name, roomUID, ownerUID;
+        private TextView name, roomUID, ownerUID, game, roomOwner;
         public View view;
         private Button deleteBtn;
         private Button editBtn;
@@ -90,9 +90,9 @@ public class MyRoomsParticipantAdapter extends RecyclerView.Adapter< MyRoomsPart
             super(itemView);
             view = itemView;
             name = itemView.findViewById(R.id.myRoomName);
-            //description = itemView.findViewById(R.id.roomDesc);
+            game = itemView.findViewById(R.id.game);
             roomUID = itemView.findViewById(R.id.myRoomUID);
-            //roomOwner = itemView.findViewById(R.id.roomOwner);
+            roomOwner = itemView.findViewById(R.id.roomOwner);
             ownerUID = itemView.findViewById(R.id.myRoomOwnerUID);
             deleteBtn = itemView.findViewById(R.id.MRDeleteBtn);
             editBtn = itemView.findViewById(R.id.MREditBtn);

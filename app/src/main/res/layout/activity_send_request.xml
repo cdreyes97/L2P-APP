@@ -31,14 +31,14 @@
                 android:text="Room"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/roomOwner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Room owner"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="?android:attr/textColorSecondary" />-->
 
         </LinearLayout>
 
