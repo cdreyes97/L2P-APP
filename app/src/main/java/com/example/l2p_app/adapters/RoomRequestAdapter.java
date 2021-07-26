@@ -1,6 +1,8 @@
 package com.example.l2p_app.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.l2p_app.R;
+import com.example.l2p_app.RoomDetail;
 import com.example.l2p_app.SendRequestActivity;
 import com.example.l2p_app.models.MyRequest;
 import com.example.l2p_app.models.MySingleton;
@@ -73,37 +76,63 @@ public class RoomRequestAdapter extends RecyclerView.Adapter<RoomRequestAdapter.
         holder.acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference db = FirebaseDatabase.getInstance().getReference("request_per_room/" + game);
-                DatabaseReference addParticipant = FirebaseDatabase.getInstance().getReference("room_participants/" + request.getRoomUID() + "/participants");
-                addParticipant.child(request.getUserUID()).setValue(request.getUserName());
-                deleteRequests(request, game, position);
 
-                NOTIFICATION_TITLE = "Solicitud aceptada";
-                NOTIFICATION_MESSAGE = "Su solicitud para la sala " + room.getName() +" a sido aceptada"; //tomar nombre de sala
+                if (room.getRoomCapacity() > room.getCapacityUsed()) {
 
-                db = FirebaseDatabase.getInstance().getReference("Users/" + request.getUserUID());
-                db.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        USER_TOKEN = task.getResult().getValue().toString();
-                        JSONObject notification = new JSONObject();
-                        JSONObject notifcationBody = new JSONObject();
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("request_per_room/" + game);
+                    DatabaseReference addParticipant = FirebaseDatabase.getInstance().getReference("room_participants/" + request.getRoomUID() + "/participants");
+                    addParticipant.child(request.getUserUID()).setValue(request.getUserName());
+                    deleteRequests(request, game, position);
+
+                    NOTIFICATION_TITLE = "Solicitud aceptada";
+                    NOTIFICATION_MESSAGE = "Su solicitud para la sala " + room.getName() +" a sido aceptada"; //tomar nombre de sala
+
+                    room.setCapacityUsed(room.getCapacityUsed() + 1);
+                    String roomUID = room.getUID();
+                    room.setUID(null);
+                    DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("Rooms/" + game);
+                    roomRef.child(roomUID).setValue(room);
+                    room.setUID(roomUID);
+
+                    db = FirebaseDatabase.getInstance().getReference("Users/" + request.getUserUID());
+                    db.child("token").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            USER_TOKEN = task.getResult().getValue().toString();
+                            JSONObject notification = new JSONObject();
+                            JSONObject notifcationBody = new JSONObject();
 
 
-                        try {
-                            notifcationBody.put("title", NOTIFICATION_TITLE);
-                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+                            try {
+                                notifcationBody.put("title", NOTIFICATION_TITLE);
+                                notifcationBody.put("message", NOTIFICATION_MESSAGE);
 
-                            notification.put("to", USER_TOKEN);
-                            notification.put("data", notifcationBody);
-                            notification.put("time_to_live", 600);
-                        } catch (JSONException e) {
-                            Log.e(TAG, "onCreate: " + e.getMessage() );
+                                notification.put("to", USER_TOKEN);
+                                notification.put("data", notifcationBody);
+                                notification.put("time_to_live", 600);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "onCreate: " + e.getMessage() );
+                            }
+                            sendNotification(notification);
+
                         }
-                        sendNotification(notification);
+                    });
+                } else {
+                    AlertDialog.Builder confDialogBuilder = new AlertDialog.Builder(context)
+                            .setTitle("Cuidado")
+                            .setMessage("La sala está llena")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                    }
-                });
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.dismiss();
+                                }});
+
+                    AlertDialog confDialog = confDialogBuilder.create();
+                    confDialog.show();
+                }
+
+
                 
             }
         });

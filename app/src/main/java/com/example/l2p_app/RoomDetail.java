@@ -180,6 +180,16 @@ public class RoomDetail extends AppCompatActivity {
                                                 adapter.notifyDataSetChanged();
                                             }
                                         });
+                                        String roomUID = room.getUID();
+                                        DatabaseReference roomRef = FirebaseDatabase.getInstance().getReference("Rooms/" + room.getGame());
+                                        room.setCapacityUsed(room.getCapacityUsed() - 1);
+                                        roomRef.child(roomUID).setValue(room).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        });
+                                        room.setUID(roomUID);
                                         dialog.dismiss();
                                     }
                                 })

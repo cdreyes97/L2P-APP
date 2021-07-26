@@ -65,9 +65,10 @@ public class EditRoomActivity extends AppCompatActivity {
                     room.setRoomCapacity(Integer.parseInt(numPlayers));
 
                     db = FirebaseDatabase.getInstance().getReference("Rooms/" + room.getGame());
-                    DatabaseReference roomUpdated = db.child(room.getUID());
+                    DatabaseReference roomUpdated = db.child(roomUID);
                     room.setUID(null);
                     roomUpdated.setValue(room);
+                    room.setUID(roomUID);
 
                     AlertDialog.Builder confDialogBuilder = new AlertDialog.Builder(EditRoomActivity.this)
                             .setTitle("Confirmación")
@@ -99,9 +100,14 @@ public class EditRoomActivity extends AppCompatActivity {
         String name = roomName.getEditText().getText().toString();
         String description = roomDesc.getEditText().getText().toString();
         String numPlayers = roomPlayers.getEditText().getText().toString();
-
+        int integerNumPlayers = Integer.parseInt(numPlayers);
         if (name.isEmpty() || description.isEmpty() || numPlayers.isEmpty()) {
             Toast.makeText(this, "Por favor ingrese correctamente los datos", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (integerNumPlayers < room.getCapacityUsed()) {
+            Toast.makeText(this, "El número de participantes es menor a la cantidad que ya está en la sala.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
