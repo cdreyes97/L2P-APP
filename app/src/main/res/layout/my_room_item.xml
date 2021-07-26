@@ -14,7 +14,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -74,16 +73,17 @@
 
         <TextView
             android:id="@+id/myRoomName"
-            android:layout_width="317dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Room Name"
+            android:padding="16dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" /> />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="right"
+            android:padding="8dp"
+            android:gravity="left"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -94,18 +94,12 @@
                 android:text="Eliminar" />
 
             <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:id="@+id/MREditBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Editar" />
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:id="@+id/MRviewtBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ver Sala" />
         </LinearLayout>
 
 

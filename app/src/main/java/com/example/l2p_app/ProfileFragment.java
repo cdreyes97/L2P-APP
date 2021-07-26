@@ -92,8 +92,8 @@ public class ProfileFragment extends Fragment {
                 pgsBar.setVisibility(View.VISIBLE);
                 User user = snapshot.getValue(User.class);
                 pgsBar.setVisibility(View.GONE);
-                profileName.setText("Usuario: " + user.getName());
-                profileEmail.setText("Correo: " + user.getEmail());
+                profileName.setText(user.getName());
+                profileEmail.setText(user.getEmail());
             }
 
             @Override

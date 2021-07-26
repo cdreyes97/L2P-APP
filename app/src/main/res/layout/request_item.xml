@@ -3,7 +3,9 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp"
+    android:layout_marginTop="24dp"
+    android:layout_marginLeft="24dp"
+    android:layout_marginRight="24dp"
     app:cardElevation="8dp">
 
     <LinearLayout
@@ -16,6 +18,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
+
+            <TextView
+                android:id="@+id/roomName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:text="Le' room" />
 
 
             <TextView
@@ -33,27 +42,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorSecondary"
                 android:text="Agrégame, soy platino 3, búscame si quieres: Tankards" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="horizontal"
-            android:layout_gravity="right">
+            android:layout_gravity="left">
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/rejectBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:text="Rechazar"
                 style="?attr/borderlessButtonStyle" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/acceptBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="Aceptar" />
+                android:text="Aceptar"
+                style="?attr/borderlessButtonStyle"/>
+
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
