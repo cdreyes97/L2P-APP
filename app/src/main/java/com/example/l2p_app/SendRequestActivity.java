@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -43,6 +44,7 @@ public class SendRequestActivity extends AppCompatActivity {
     final String TAG = "NOTIFICATION TAG";
     private String TOPIC,NOTIFICATION_TITLE,NOTIFICATION_MESSAGE,USER_TOKEN;
 
+    private TextView roomView;
     private TextInputLayout msgRequest;
     private Button sendRequestBtn, cancelBtn;
     private FirebaseAuth firebaseAuth;
@@ -69,7 +71,9 @@ public class SendRequestActivity extends AppCompatActivity {
         msgRequest = findViewById(R.id.msgRequest);
         sendRequestBtn = findViewById(R.id.sendRequest);
         cancelBtn = findViewById(R.id.cancelBtn);
+        roomView = findViewById(R.id.roomID);
 
+        roomView.setText(roomName);
 
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override

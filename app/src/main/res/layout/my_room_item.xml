@@ -62,7 +62,6 @@
                 android:textSize="26sp"
                 android:textStyle="bold"/>
             <TextView
-                android:id="@+id/game"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -71,13 +70,50 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/myRoomName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Room Name"
             android:padding="16dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" /> />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/myRoomName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Room Name"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" /> />
+
+                <TextView
+                    android:id="@+id/roomOwner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:text="Room owner"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Game"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="?android:attr/textColorSecondary"
+                />
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
